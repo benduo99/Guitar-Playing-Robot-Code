@@ -3,58 +3,64 @@ typedef struct
 	// Fretting Stuff
 	tMotor pulleyMotor;
 	tSensors touchPort;
+	char currentNote;
 
 	// Strumming Stuff
 	tMotor strummingMotor;
-	bool isLeft;    // Left relative to motor while looking at it from behind
+	int parity;    // Left relative to motor while looking at it from behind
 }Line;
+
+void switchParity(Line & object)
+{
+	object.parity *= -1;
+}
+void updateNote(Line & object, char note)
+{
+	object.currentNote = note;
+}
 
 void initializeLine(Line & object, tMotor pulleyMotor, tSensors touchPort, tMotor strummingMotor)
 {
 	object.pulleyMotor = pulleyMotor;
 	object.touchPort = touchPort;
+	object.currentNote = '-';
 	object.strummingMotor = strummingMotor;
-	object.isLeft = true;
+	object.parity = 1;
 }
 
-void strum(Line a, Line g, char currentNote1, char currentNote2)
+void strum(Line a, Line g)
 {
-	int parityA = 1;
-	int parityB = 1;
-	if(!a.isLeft)
+	bool aIsRunning = false;
+	bool bIsRunning = false;
+	if(a.currentNote != '-')
 	{
-		parityA *= -1;
+		motor[a.strummingMotor] = a.parity * 75;
+		switchParity(a);
+		aIsRunning = true;
 	}
-	if(!g.isLeft)
+	if(g.currentNote != '-')
 	{
-		parityB *= -1;
+		motor[g.strummingMotor] = g.parity * 75;
+		switchParity(g);
+		bIsRunning = true;
 	}
-	if(currentNote1 != '-')
+	while((aIsRunning && abs(nMotorEncoder[a.strummingMotor]) < 30) || bIsRunning && abs(nMotorEncoder[g.strummingMotor])< 30)
 	{
-		motor[motorA] = parityA * 70;
-		a.isLeft = !a.isLeft;
-	}
-	if(currentNote2 != '-')
-	{
-		motor[g.strummingMotor]  = parityB * 70;
-		g.isLeft = !g.isLeft;
-	}
-
-	while(currentNote1 != '-' && abs(nMotorEncoder[motorA]) > 30 || currentNote2 != '-' && abs(nMotorEncoder[g.strummingMotor]) > 30)
-	{
-
-		displayString(0,"%d",nMotorEncoder[motorA]);
-		if(abs(nMotorEncoder[motorA]) > 30)
+		displayString(0, "%d", nMotorEncoder[a.strummingMotor]);
+		if(abs(nMotorEncoder[a.strummingMotor]) >= 30)
 		{
-			motor[motorA] = 0;
+			motor[a.strummingMotor] = 0;
 		}
-		if(abs(nMotorEncoder[g.strummingMotor]) > 30)
+		if(abs(nMotorEncoder[g.strummingMotor]) >= 30)
 		{
 			motor[g.strummingMotor] = 0;
 		}
 	}
 
+	motor[a.strummingMotor] = motor[g.strummingMotor] = 0;
 
+	resetMotorEncoder(a.strummingMotor);
+	resetMotorEncoder(g.strummingMotor);
 }
 
 
@@ -66,14 +72,32 @@ task main()
 	initializeLine(a, 1, 1, motorA);
 	initializeLine(g, 2, 2, motorB);
 
-
-		while(true)
+	while(true)
+	{
+		while(!getButtonPress(buttonAny))
+		{}
+		while(getButtonPress(buttonAny))
 		{
-			while(!getButtonPress(buttonAny))
-			{}
-			while(getButtonPress(buttonEnter))
-			{}
-			strum(a, g, 'A', 'A');
+			if(getButtonPress(buttonEnter))
+			{
+				updateNote(a, 'G');
+			}
+			if(getButtonPress(buttonLeft))
+			{
+				updateNote(g, 'C');
+			}
+			if(getButtonPress(buttonRight))
+			{
+				updateNote(a, '-');
+			}
+			if(getButtonPress(buttonDown))
+			{
+				updateNote(g, '-');
+			}
+		}
+
+		strum(a, g);
+
 	}
 
 }
