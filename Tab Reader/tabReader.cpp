@@ -26,9 +26,13 @@ void string_init(string &e, string &B, string &G, string &D,string &A,
 		string rawA, string rawE, char are[],char arB[], char arG[], 
 		char arD [], char arA[], char arE[]);
 		
-string removeBarLines(string line);		
-				 
+string markBarLines(string line);	
 
+void findBlanks(char are[],char arB[], char arG[], 
+		char arD [], char arA[], char arE[]);
+	
+string removeBlanks(string line);			
+				 
 int main()
 {
 	string rawe = "|", rawB = "|", rawG= "|", rawD= "|", rawA= "|", rawE= "|";
@@ -36,6 +40,8 @@ int main()
 	string fileName = "Happy Birthday";
 	
 	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName);
+	
+	bool nullSpace [MAX_SIZE];
 	
 	char are[MAX_SIZE], arB[MAX_SIZE], arG[MAX_SIZE], arD[MAX_SIZE], arA[MAX_SIZE], arE[MAX_SIZE];
 	
@@ -54,8 +60,6 @@ bool getTab(string &e, string &B, string &G, string &D,
 		
 	string readFile = fileName+ ".txt";
 	ifstream fin(readFile.c_str());	
-
-	//ifstream fin(fileName);
 		
 	if(!fin)
 	{
@@ -145,7 +149,7 @@ void string2array(char are[],char arB[], char arG[], char arD [], char arA[],
 	arG[position]=G[position];
 	arD[position]=D[position];
 	arA[position]=A[position];
-	arE[position]=E[position];
+	arE[position]=E[position];	
 	}
 }	
 
@@ -163,7 +167,7 @@ void encodeArray(char ar[])
 			if(ar[position+1]>=48&&ar[position+1]<=57) 
 			{
 				note += ar[position+1];
-				ar[position+1] ='-';	
+				ar[position+1] ='%';	
 			}
 			
 		ar[position] = encodeNums(note);
@@ -171,7 +175,6 @@ void encodeArray(char ar[])
 		}
 		position++;
 	}
-	
 }
 
 char encodeNums(string number)
@@ -210,32 +213,58 @@ void string_init(string &e, string &B, string &G, string &D,string &A,
 {
 	array_init(are, arB, arG, arD, arA, arE);
 	string2array(are, arB, arG, arD, arA, arE, rawe, rawB, rawG, rawD, rawA, rawE);
-		
+
 	encodeArray(are);
 	encodeArray(arB);
 	encodeArray(arG);
 	encodeArray(arD);
 	encodeArray(arA);
 	encodeArray(arE);
-		
-	e = removeBarLines(array2string(are));
-	B = removeBarLines(array2string(arB));
-	G = removeBarLines(array2string(arG));
-	D = removeBarLines(array2string(arD));
-	A = removeBarLines(array2string(arA));
-	E = removeBarLines(array2string(arE));
 	
+	findBlanks(are,arB,arG,arD,arA,arE);
+			
+	e = removeBlanks(markBarLines(array2string(are)));
+	B = removeBlanks(markBarLines(array2string(arB)));
+	G = removeBlanks(markBarLines(array2string(arG)));
+	D = removeBlanks(markBarLines(array2string(arD)));
+	A = removeBlanks(markBarLines(array2string(arA)));
+	E = removeBlanks(markBarLines(array2string(arE)));
 }
 
-string removeBarLines(string line)
+string markBarLines(string line)
 {
 	for(int count =0; count <line.length()-1;count++)
 	{
 		if(line[count]=='|')
-			line[count] ='-';
+			line[count] ='%';
 	}
 	return line;
 }
 
-
+void findBlanks(char are[],char arB[], char arG[], 
+		char arD [], char arA[], char arE[])
+{
+	int count=0;
+	while(are[count]!='#')
+	{
+		if(are[count]=='%'||arB[count]=='%'||arG[count]=='%'||arD[count]=='%'||
+				arA[count]=='%'||arE[count]=='%')
+		{
+			are[count]=arB[count]=arG[count]=arD[count]=arA[count]=arE[count]='%';
+		}	
+	count++;		
+	}
+}
+string removeBlanks(string line)
+{
+	string lineRemoved="";
+	for(int count =0; count<line.length();count++)
+	{
+		if(line[count]!='%')
+		{
+			lineRemoved+=line[count];
+		}
+	}
+	return lineRemoved;
+}
 
