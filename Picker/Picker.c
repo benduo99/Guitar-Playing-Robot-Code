@@ -44,7 +44,7 @@ void strum(Line a, Line g)
 		switchParity(g);
 		bIsRunning = true;
 	}
-	while((aIsRunning && abs(nMotorEncoder[a.strummingMotor]) < 45) || bIsRunning && abs(nMotorEncoder[g.strummingMotor])< 45)
+	while((aIsRunning && abs(nMotorEncoder[a.strummingMotor]) < 45) || bIsRunning && abs(nMotorEncoder[g.strummingMotor]) < 45)
 	{
 		if(abs(nMotorEncoder[a.strummingMotor]) >= 45)
 		{
