@@ -187,7 +187,7 @@ char encodeNums(string number)
 	else if (value>12&&value<=24)
 		note = (char)value +52;
 	else if (value == 0)
-		note = 'L';		
+		note = 'M';		
 	else
 		note = '-';
 	return note;	
