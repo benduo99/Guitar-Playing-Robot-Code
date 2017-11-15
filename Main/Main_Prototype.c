@@ -82,12 +82,12 @@ void muted_reset(Line&A, Line&G)
 	resetMotorEncoder(G.strummingMotor);
 	if (A.parity < 0)
 	{
-		motor[A.strummingMotor] = MOTOR_TEMPO;
+		motor[A.strummingMotor] = MOTOR_TEMPO*A.parity;
 		switchParity(A);
 	}
 	if (G.parity < 0)
 	{
-		motor[G.strummingMotor] = MOTOR_TEMPO;
+		motor[G.strummingMotor] = MOTOR_TEMPO*G.parity;
 		switchParity(G);
 	}
 	motor[A.strummingMotor] = motor[G.strummingMotor] = MOTOR_TEMPO;	
