@@ -89,7 +89,7 @@ void muted_reset(Line&A, Line&G)
 	{
 		motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 		switchParity(G);
-	}	
+	}
 		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 		{
 			if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
@@ -114,7 +114,7 @@ task main()
 	Line G;
 	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
 	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
-	
+
 
 	initializeLine(A, 1, 1, motorA);
 	initializeLine(G, 2, 2, motorB);
@@ -123,7 +123,7 @@ task main()
 	{}
 	while(getButtonPress(buttonAny))
 	{}
-	displayString(0, "Now Playing:")
+	displayString(0, "Now Playing:");
 	displayString(1,"%s",Song_2.song_name);
 	int current = 0;
 	while (NoteSeqA[current] && NoteSeqG[current])
