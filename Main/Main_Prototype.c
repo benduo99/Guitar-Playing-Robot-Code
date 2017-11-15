@@ -116,8 +116,8 @@ task main()
 	//blur reference
 	Line A;
 	Line G;
-	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--820";
-	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--820";
+	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
+	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
 
 
 	initializeLine(A, 1, 1, motorA);
@@ -138,7 +138,7 @@ task main()
 		current ++;
 	}
 	displayString(0, "That is the end of the song:");
-	displayString(1, "Feel free to terminate me now", Song_2.song_name))
+	displayString(1, "Feel free to terminate me now", Song_2.song_name);
 	while(!getButtonPress(buttonAny))
 	{}
 	while(getButtonPress(buttonAny))
