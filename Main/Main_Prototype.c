@@ -13,8 +13,8 @@ typedef struct
 typedef struct
 {
 	//notes for string A
-	char NoteSeqA[];
-	char NoteSeqG[];
+	char NoteSeqA[100];
+	char NoteSeqG[100];
 	string song_name;
 	//asssume that can output number of notes including dashes to play
 }song_info;
@@ -81,8 +81,8 @@ task main()
 	//blur reference
 	Line A;
 	Line G;
-	Song_2.NoteSeqA[] = "enter-string-A-sequence-as-a-string-here0";
-	Song_2.NoteSeqG[] = "enter-string-G-sequence-as-a-string-here0";
+	char NoteSeqA[] = "enter-----string-A-sequence-------as-------a------string-here0";
+	char NoteSeqG[] = "enter----string----------G-------sequence-as------a-------string-here0";
 
 
 	initializeLine(A, 1, 1, motorA);
@@ -92,14 +92,16 @@ task main()
 	{}
 	while(getButtonPress(buttonAny))
 	{}
-	displayString(0,"%s",song_info.song_name);
-	while (Song_2.NoteSeqA[current] && Song_2.NoteSeqG[current])
+	displayString(0,"%s",Song_2.song_name);
+	int current = 0;
+	while (NoteSeqA[current] && NoteSeqG[current])
 	//the end of the file is going to change the | to a 0
 	{
-		updateNote(A, G, Song_2.NoteSeqA[current], Song_2.NoteSeqG[current);
+		updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
 		strum (A,G);
+		current ++;
 	}
-	
+
 //	while(getButtonPress(buttonAny))
 //	{
 //		if(getButtonPress(buttonEnter))
@@ -118,7 +120,7 @@ task main()
 //		{
 //			updateNote(G, '-');
 //		}
-	
+
 
 //	strum(A, G);
 
