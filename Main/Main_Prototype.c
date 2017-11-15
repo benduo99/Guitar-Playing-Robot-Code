@@ -95,11 +95,11 @@ void muted_reset(Line&A, Line&G)
 	{
 		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 		{
-			if (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+			if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
 			{
 				motor[A.strummingMotor] = 0;
 			}
-			if (abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+			if (abs(nMotorEncoder[G.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
 			{
 				motor[G.strummingMotor] = 0;
 			}
