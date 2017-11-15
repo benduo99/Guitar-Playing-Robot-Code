@@ -116,8 +116,8 @@ task main()
 	//blur reference
 	Line A;
 	Line G;
-	char NoteSeqA[] = "enter-----string-A-sequence-------as-------a------string-here0";
-	char NoteSeqG[] = "enter----string----------G-------sequence-as------a-------string-here0";
+	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
+	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
 
 
 	initializeLine(A, 1, 1, motorA);
@@ -134,15 +134,18 @@ task main()
 	{
 		updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
 		strum (A,G);
+		wait1Msec(100);
 		current ++;
 	}
-	displayString(0,"That is the end of the song: %s\n Feel free to terminate me now", Song_2.song_name);
+	displayString(0, "That is the end of the song:");
+	displayString(1, "Feel free to terminate me now", Song_2.song_name))
 	while(!getButtonPress(buttonAny))
 	{}
 	while(getButtonPress(buttonAny))
 	{}
 	displayString(0,"Thanks :)");
 	muted_reset (A,G);
+	motor[A.strummingMotor] = motor[G.strummingMotor] = 0;
 	}
 //	while(getButtonPress(buttonAny))
 //	{
