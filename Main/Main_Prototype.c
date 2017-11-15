@@ -90,9 +90,7 @@ void muted_reset(Line&A, Line&G)
 		motor[G.strummingMotor] = MOTOR_TEMPO;
 		switchParity(G);
 	}
-	motor[A.strummingMotor] = motor[G.strummingMotor] = MOTOR_TEMPO;
-	if (A.parity < 0 && G.parity < 0)
-	{
+	motor[A.strummingMotor] = motor[G.strummingMotor] = MOTOR_TEMPO;	
 		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 		{
 			if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
@@ -104,7 +102,6 @@ void muted_reset(Line&A, Line&G)
 				motor[G.strummingMotor] = 0;
 			}
 		}
-	}
 }
 
 
@@ -143,9 +140,10 @@ task main()
 	{}
 	while(getButtonPress(buttonAny))
 	{}
-	displayString(0,"Thanks :)");
 	muted_reset (A,G);
 	motor[A.strummingMotor] = motor[G.strummingMotor] = 0;
+	displayString(0,"Thanks :)");
+	wait1Msec(5000);
 	}
 //	while(getButtonPress(buttonAny))
 //	{
