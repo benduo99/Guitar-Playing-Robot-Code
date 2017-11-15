@@ -44,7 +44,7 @@ void strum(Line A, Line G)
 	const int DEGREE_OF_ROTATION = 45;
 	bool aIsRunning = false;
 	bool bIsRunning = false;
-	
+
 	if(A.currentNote != '-')
 	{
 		motor[A.strummingMotor] = A.parity * MOTOR_TEMPO;
@@ -83,23 +83,23 @@ void muted_reset(Line&A, Line&G)
 	if (A.parity < 0)
 	{
 		motor[A.strummingMotor] = MOTOR_TEMPO;
-		switchParity(A);	
+		switchParity(A);
 	}
 	if (G.parity < 0)
 	{
 		motor[G.strummingMotor] = MOTOR_TEMPO;
 		switchParity(G);
 	}
-	motor[A.strummingMotor] = motor[B.strummingMotor] = MOTOR_TEMPO;
-	if (A.parity < 0 && G.parity < 0))
+	motor[A.strummingMotor] = motor[G.strummingMotor] = MOTOR_TEMPO;
+	if (A.parity < 0 && G.parity < 0)
 	{
 		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 		{
-			if (abs(nMotorEncoder[A.strummingMotor] <= ANGLE_OF_MUTE_ROTATION))
+			if (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 			{
 				motor[A.strummingMotor] = 0;
 			}
-			if (abs(nMotorEncoder[G.strummingMotor] <= ANGLE_OF_MUTE_ROTATION]))
+			if (abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 			{
 				motor[G.strummingMotor] = 0;
 			}
@@ -112,7 +112,7 @@ task main()
 {
 	// assume we recieved the string
 	song_info Song_2;
-	Song_.song_name = "Complex a$$ song!!!";
+	Song_2.song_name = "Complex a$$ song!!!";
 	//blur reference
 	Line A;
 	Line G;
@@ -136,7 +136,7 @@ task main()
 		strum (A,G);
 		current ++;
 	}
-	displayString(0,"That is the end of the song: %s\n Feel free to terminate me now", Sont_2.song_name);
+	displayString(0,"That is the end of the song: %s\n Feel free to terminate me now", Song_2.song_name);
 	while(!getButtonPress(buttonAny))
 	{}
 	while(getButtonPress(buttonAny))
@@ -165,6 +165,3 @@ task main()
 
 
 //	strum(A, G);
-
-
-}
