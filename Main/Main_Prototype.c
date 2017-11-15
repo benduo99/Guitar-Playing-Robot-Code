@@ -1,3 +1,4 @@
+const int MOTOR_TEMPO = 75;
 typedef struct
 {
 	// Fretting Stuff
@@ -40,28 +41,29 @@ void initializeLine(Line & object, tMotor pulleyMotor, tSensors touchPort, tMoto
 
 void strum(Line A, Line G)
 {
-	const int degree_of_rotation = 45;
+	const int DEGREE_OF_ROTATION = 45;
 	bool aIsRunning = false;
 	bool bIsRunning = false;
+	
 	if(A.currentNote != '-')
 	{
-		motor[A.strummingMotor] = A.parity * 75;
+		motor[A.strummingMotor] = A.parity * MOTOR_TEMPO;
 		switchParity(A);
 		aIsRunning = true;
 	}
 	if(G.currentNote != '-')
 	{
-		motor[G.strummingMotor] = G.parity * 75;
+		motor[G.strummingMotor] = G.parity * MOTOR_TEMPO;
 		switchParity(G);
 		bIsRunning = true;
 	}
-	while((aIsRunning && abs(nMotorEncoder[A.strummingMotor]) < degree_of_rotation) || bIsRunning && abs(nMotorEncoder[G.strummingMotor]) < degree_of_rotation)
+	while((aIsRunning && abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || bIsRunning && abs(nMotorEncoder[G.strummingMotor]) < DEGREE_OF_ROTATION)
 	{
-		if(abs(nMotorEncoder[A.strummingMotor]) >= degree_of_rotation)
+		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
 			motor[A.strummingMotor] = 0;
 		}
-		if(abs(nMotorEncoder[G.strummingMotor]) >= degree_of_rotation)
+		if(abs(nMotorEncoder[G.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
 			motor[G.strummingMotor] = 0;
 		}
@@ -73,11 +75,44 @@ void strum(Line A, Line G)
 	resetMotorEncoder(G.strummingMotor);
 }
 
+void muted_reset(Line&A, Line&G)
+{
+	const int ANGLE_OF_MUTE_ROTATION = 20;
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(G.strummingMotor);
+	if (A.parity < 0)
+	{
+		motor[A.strummingMotor] = MOTOR_TEMPO;
+		switchParity(A);	
+	}
+	if (G.parity < 0)
+	{
+		motor[G.strummingMotor] = MOTOR_TEMPO;
+		switchParity(G);
+	}
+	motor[A.strummingMotor] = motor[B.strummingMotor] = MOTOR_TEMPO;
+	if (A.parity < 0 && G.parity < 0))
+	{
+		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+		{
+			if (abs(nMotorEncoder[A.strummingMotor] <= ANGLE_OF_MUTE_ROTATION))
+			{
+				motor[A.strummingMotor] = 0;
+			}
+			if (abs(nMotorEncoder[G.strummingMotor] <= ANGLE_OF_MUTE_ROTATION]))
+			{
+				motor[G.strummingMotor] = 0;
+			}
+		}
+	}
+}
+
 
 task main()
 {
 	// assume we recieved the string
 	song_info Song_2;
+	Song_.song_name = "Complex a$$ song!!!";
 	//blur reference
 	Line A;
 	Line G;
@@ -101,7 +136,14 @@ task main()
 		strum (A,G);
 		current ++;
 	}
-
+	displayString(0,"That is the end of the song: %s\n Feel free to terminate me now", Sont_2.song_name);
+	while(!getButtonPress(buttonAny))
+	{}
+	while(getButtonPress(buttonAny))
+	{}
+	displayString(0,"Thanks :)");
+	muted_reset (A,G);
+	}
 //	while(getButtonPress(buttonAny))
 //	{
 //		if(getButtonPress(buttonEnter))
