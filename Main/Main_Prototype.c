@@ -1,4 +1,5 @@
 const int MOTOR_TEMPO = 75;
+const int DEGREE_OF_ROTATION = 45;
 typedef struct
 {
 	// Fretting Stuff
@@ -41,7 +42,6 @@ void initializeLine(Line & object, tMotor pulleyMotor, tSensors touchPort, tMoto
 
 void strum(Line A, Line G)
 {
-	const int DEGREE_OF_ROTATION = 45;
 	bool aIsRunning = false;
 	bool bIsRunning = false;
 
@@ -90,17 +90,31 @@ void muted_reset(Line&A, Line&G)
 		motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 		switchParity(G);
 	}	
-		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+	while((abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || abs(nMotorEncoder[G.strummingMotor]) < DEGREE_OF_ROTATION)
+	{
+		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
-			if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
-			{
-				motor[A.strummingMotor] = 0;
-			}
-			if (abs(nMotorEncoder[G.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
-			{
-				motor[G.strummingMotor] = 0;
-			}
+			motor[A.strummingMotor] = 0;
 		}
+		if(abs(nMotorEncoder[G.strummingMotor]) >= DEGREE_OF_ROTATION)
+		{
+			motor[G.strummingMotor] = 0;
+	}	
+	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
+	motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
+	switchParity(A);
+	switchParity(G);
+	while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+	{
+		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		{
+			motor[A.strummingMotor] = 0;
+		}
+		if (abs(nMotorEncoder[G.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		{
+			motor[G.strummingMotor] = 0;
+		}
+	}
 }
 
 
