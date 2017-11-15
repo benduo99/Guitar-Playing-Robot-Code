@@ -82,15 +82,14 @@ void muted_reset(Line&A, Line&G)
 	resetMotorEncoder(G.strummingMotor);
 	if (A.parity < 0)
 	{
-		motor[A.strummingMotor] = MOTOR_TEMPO*A.parity;
+		motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
 		switchParity(A);
 	}
 	if (G.parity < 0)
 	{
-		motor[G.strummingMotor] = MOTOR_TEMPO*G.parity;
+		motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 		switchParity(G);
-	}
-	motor[A.strummingMotor] = motor[G.strummingMotor] = MOTOR_TEMPO;	
+	}	
 		while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
 		{
 			if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
@@ -115,7 +114,7 @@ task main()
 	Line G;
 	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
 	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
-
+	
 
 	initializeLine(A, 1, 1, motorA);
 	initializeLine(G, 2, 2, motorB);
@@ -124,7 +123,8 @@ task main()
 	{}
 	while(getButtonPress(buttonAny))
 	{}
-	displayString(0,"%s",Song_2.song_name);
+	displayString(0, "Now Playing:")
+	displayString(1,"%s",Song_2.song_name);
 	int current = 0;
 	while (NoteSeqA[current] && NoteSeqG[current])
 	//the end of the file is going to change the | to a 0
@@ -135,7 +135,8 @@ task main()
 		current ++;
 	}
 	displayString(0, "That is the end of the song:");
-	displayString(1, "Feel free to terminate me now", Song_2.song_name);
+	displayString(1, "%s", Song_2.song_name);
+	displayString(2, "Feel free to terminate me now", Song_2.song_name);
 	while(!getButtonPress(buttonAny))
 	{}
 	while(getButtonPress(buttonAny))
