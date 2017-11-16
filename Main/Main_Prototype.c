@@ -128,7 +128,7 @@ task main()
 	Line G;
 	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
 	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
-	
+
 
 	initializeLine(A, 1, 1, motorA);
 	initializeLine(G, 2, 2, motorB);
@@ -137,7 +137,7 @@ task main()
 	{}
 	while(getButtonPress(buttonAny))
 	{}
-	displayString(0, "Now Playing:")
+	displayString(0, "Now Playing:");
 	displayString(1,"%s",Song_2.song_name);
 	int current = 0;
 	while (NoteSeqA[current] && NoteSeqG[current])
