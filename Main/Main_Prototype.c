@@ -150,12 +150,12 @@ if(!fileOkay)
 		Line A;
 		Line G;
 		char NoteSeqA[LONG_TAB];
-		for (int seqIndex = 0, seqIndex < LONG_TAB, seqIndex++)
+		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 		{
 			readCharPC(fin, NoteSeqA[seqIndex]);
 		}
 		char NoteSeqG[LONG_TAB];
-		for (int seqIndex = 0, seqIndex < LONG_TAB, seqIndex++)
+		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 		{
 			readCharPC(fin, NoteSeqG[seqIndex]);
 		}
