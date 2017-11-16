@@ -42,7 +42,7 @@ Ver  Date       Comment
 #define _EV3FILEIO 1
 #endif
 
-#define _MAIN_PCFILEIO 1  // 1 for test main program, 0 for use in other programs
+#define _MAIN_PCFILEIO 0  // 1 for test main program, 0 for use in other programs
 
 // ASCII characters
 const byte _NULL = 0;

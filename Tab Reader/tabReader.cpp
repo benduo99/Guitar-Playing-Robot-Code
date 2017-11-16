@@ -1,6 +1,5 @@
 #include <fstream>
 #include <cstdlib>
-#include <iostream>
 
 using namespace std;
 
@@ -35,21 +34,14 @@ string removeBlanks(string line);
 				 
 int main()
 {
-	string rawe = "|", rawB = "|", rawG= "|", rawD= "|", rawA= "|", rawE= "|";
-	string tuning [6];
-	string fileName = "Happy Birthday";
-	
-	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName);
-	
-	bool nullSpace [MAX_SIZE];
-	
+	ofstream fout("Play_me.txt")
 	char are[MAX_SIZE], arB[MAX_SIZE], arG[MAX_SIZE], arD[MAX_SIZE], arA[MAX_SIZE], arE[MAX_SIZE];
 	
 	string e, B, G, D, A, E;
 	
 	string_init(e,B,G,D,A,E,rawe,rawB,rawG,rawD,rawA,rawE,are, arB, arG,arD,arA,arE);
 	
-	cout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
+	fout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
 				
 	return EXIT_SUCCESS;
 }

@@ -1,3 +1,4 @@
+#include "EV3_FileIO.c"
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
 typedef struct
@@ -120,6 +121,9 @@ void muted_reset(Line&A, Line&G)
 
 task main()
 {
+	//open file and read  (file is in a string)
+	TFileHandle fin;
+	bool fileOkay = openReadPC(fin, "Play_me.txt")
 	// assume we recieved the string
 	song_info Song_2;
 	Song_2.song_name = "Complex a$$ song!!!";
