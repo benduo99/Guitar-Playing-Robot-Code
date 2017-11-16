@@ -1,4 +1,4 @@
-#include "EV3_FileIO.c"
+//#include "EV3_FileIO.c"
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
 typedef struct
@@ -98,81 +98,82 @@ void muted_reset(Line&A, Line&G)
 	while(aIsRight && (abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || gIsRight && (abs(nMotorEncoder[G.strummingMotor]) < DEGREE_OF_ROTATION))
 	{
 		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
-		{
-			motor[A.strummingMotor] = 0;
+
+			{		motor[A.strummingMotor] = 0;
+			}
+			if(abs(nMotorEncoder[G.strummingMotor]) >= DEGREE_OF_ROTATION)
+			{
+				motor[G.strummingMotor] = 0;
+			}
 		}
-		if(abs(nMotorEncoder[G.strummingMotor]) >= DEGREE_OF_ROTATION)
-		{
-			motor[G.strummingMotor] = 0;
+			resetMotorEncoder(A.strummingMotor);
+			resetMotorEncoder(G.strummingMotor);
+			motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
+			motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
+
+
+			switchParity(A);
+			switchParity(G);
+			while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+			{
+				if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+				{
+					motor[A.strummingMotor] = 0;
+				}
+				if (abs(nMotorEncoder[G.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+				{
+					motor[G.strummingMotor] = 0;
+				}
+			}
+
 	}
-	resetMotorEncoder(A.strummingMotor);
-	resetMotorEncoder(G.strummingMotor);
-	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
-	motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 
 
-	switchParity(A);
-	switchParity(G);
-	while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+	task main()
 	{
-		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
-		{
-			motor[A.strummingMotor] = 0;
-		}
-		if (abs(nMotorEncoder[G.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
-		{
-			motor[G.strummingMotor] = 0;
-		}
-	}
-	}
-}
-
-
-task main()
-{
 	//open file and read  (file is in a string)
-	TFileHandle fin;
-	bool fileOkay = openReadPC(fin, "Play_me.txt")
+//TFileHandle fin;
+//bool fileOkay = openReadPC(fin, "Play_me.txt")
 	// assume we recieved the string
-	song_info Song_2;
-	Song_2.song_name = "Complex a$$ song!!!";
+		song_info Song_2;
+		Song_2.song_name = "Complex a$$ song!!!";
 	//blur reference
-	Line A;
-	Line G;
-	char NoteSeqA[] = "2";
-	char NoteSeqG[] = "2";
+		Line A;
+		Line G;
+		char NoteSeqA[] = "1-";
+		char NoteSeqG[] = "1-";
 
 
-	initializeLine(A, 1, 1, motorA);
-	initializeLine(G, 2, 2, motorB);
+		initializeLine(A, 1, 1, motorA);
+		initializeLine(G, 2, 2, motorB);
 
-	while(!getButtonPress(buttonAny))
-	{}
+		while(!getButtonPress(buttonAny))
+		{}
 	while(getButtonPress(buttonAny))
 	{}
-	displayString(0, "Now Playing:");
-	displayString(1,"%s",Song_2.song_name);
-	int current = 0;
-	while (NoteSeqA[current] && NoteSeqG[current])
+displayString(0, "Now Playing:");
+displayString(1,"%s",Song_2.song_name);
+int current = 0;
+while (NoteSeqA[current] && NoteSeqG[current])
 	//the end of the file is going to change the | to a 0
-	{
-		updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
-		strum (A,G);
-		wait1Msec(100);
-		current ++;
-	}
-	displayString(0, "That is the end of the song:");
-	displayString(1, "%s", Song_2.song_name);
-	displayString(2, "Feel free to terminate me now", Song_2.song_name);
-	while(!getButtonPress(buttonAny))
-	{}
-	while(getButtonPress(buttonAny))
-	{}
-	muted_reset (A,G);
-	motor[A.strummingMotor] = motor[G.strummingMotor] = 0;
-	displayString(0,"Thanks :)");
-	wait1Msec(5000);
-	}
+{
+	updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
+	strum (A,G);
+	wait1Msec(100);
+	current ++;
+}
+displayString(0, "That is the end of the song:");
+displayString(1, "%s", Song_2.song_name);
+displayString(2, "Feel free to terminate me now", Song_2.song_name);
+while(!getButtonPress(buttonAny))
+{}
+while(getButtonPress(buttonAny))
+{}
+muted_reset (A,G);
+motor[A.strummingMotor] = motor[G.strummingMotor] = 0;
+displayString(0,"Thanks :)");
+wait1Msec(5000);
+}
 //	while(getButtonPress(buttonAny))
 //	{
 //		if(getButtonPress(buttonEnter))
