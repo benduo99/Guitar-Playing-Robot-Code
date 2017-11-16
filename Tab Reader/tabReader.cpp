@@ -65,8 +65,7 @@ bool getTab(string &e, string &B, string &G, string &D,
 		
 	if(!fin)
 	{
-		cout << "File not found";
-		return false;
+		return EXIT_FAILURE;
 	}	
 	
 	char note;

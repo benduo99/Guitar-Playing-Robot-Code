@@ -1,4 +1,4 @@
-//#include "EV3_FileIO.c"
+#include "EV3_FileIO.c"
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
 typedef struct
@@ -133,8 +133,8 @@ void muted_reset(Line&A, Line&G)
 	{
 		const int LONG_TAB = 100;
 	//open file and read  (file is in a string)
-//TFileHandle fin;
-//bool fileOkay = openReadPC(fin, "Play_me.txt")
+TFileHandle fin;
+bool fileOkay = openReadPC(fin, "Play_me.txt");
 if(!fileOkay)
 {
 	displayString(0, "Failed to Open File");
@@ -153,6 +153,7 @@ if(!fileOkay)
 		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 		{
 			readCharPC(fin, NoteSeqA[seqIndex]);
+			displayString(3,"%c",NoteSeqA[seqIndex]);
 		}
 		char NoteSeqG[LONG_TAB];
 		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
@@ -172,7 +173,7 @@ eraseDisplay();
 displayString(0, "Now Playing:");
 displayString(1,"%s",Song_2.song_name);
 int current = 0;
-while (NoteSeqA[current] && NoteSeqG[current])
+while (NoteSeqA[current] != '|' && NoteSeqG[current] != '|')
 	//the end of the file is going to return null which is false as a character
 {
 	updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
