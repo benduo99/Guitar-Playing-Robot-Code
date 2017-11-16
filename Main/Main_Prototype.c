@@ -81,17 +81,21 @@ void muted_reset(Line&A, Line&G)
 	const int ANGLE_OF_MUTE_ROTATION = 20;
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(G.strummingMotor);
+	bool aIsRight = false;
+	bool gIsRight = false;
 	if (A.parity < 0)
 	{
 		motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
 		switchParity(A);
+		aIsRight = true;
 	}
 	if (G.parity < 0)
 	{
 		motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 		switchParity(G);
-	}	
-	while((abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || abs(nMotorEncoder[G.strummingMotor]) < DEGREE_OF_ROTATION)
+		gIsRight = true;
+	}
+	while(aIsRight && (abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || gIsRight && (abs(nMotorEncoder[G.strummingMotor]) < DEGREE_OF_ROTATION))
 	{
 		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
@@ -100,9 +104,13 @@ void muted_reset(Line&A, Line&G)
 		if(abs(nMotorEncoder[G.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
 			motor[G.strummingMotor] = 0;
-	}	
+	}
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(G.strummingMotor);
 	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
 	motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
+
+
 	switchParity(A);
 	switchParity(G);
 	while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[G.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
@@ -115,6 +123,7 @@ void muted_reset(Line&A, Line&G)
 		{
 			motor[G.strummingMotor] = 0;
 		}
+	}
 	}
 }
 
@@ -130,8 +139,8 @@ task main()
 	//blur reference
 	Line A;
 	Line G;
-	char NoteSeqA[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
-	char NoteSeqG[] = "e--1--2--3--4----5--6--6--7----8-8---8-8---8-8---8-8---8-8-8-8-8-8-88--8-88-8--80";
+	char NoteSeqA[] = "2";
+	char NoteSeqG[] = "2";
 
 
 	initializeLine(A, 1, 1, motorA);
