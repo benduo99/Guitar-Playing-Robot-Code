@@ -14,6 +14,7 @@ Fret Measurements
 
 Distance between middle of 2 frets
 
+0-1   -> 1.74498 + dist0    0 is the zero touch sensor (needs to be built)
 1-2   -> 3.32486
 2-3   -> 3.07594
 3-4   -> 2.88163
