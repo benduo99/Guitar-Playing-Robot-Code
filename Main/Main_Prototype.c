@@ -89,7 +89,7 @@ void muted_reset(Line&A, Line&G)
 	{
 		motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 		switchParity(G);
-	}	
+	}
 	while((abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || abs(nMotorEncoder[G.strummingMotor]) < DEGREE_OF_ROTATION)
 	{
 		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
@@ -99,7 +99,7 @@ void muted_reset(Line&A, Line&G)
 		if(abs(nMotorEncoder[G.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
 			motor[G.strummingMotor] = 0;
-	}	
+	}
 	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
 	motor[G.strummingMotor] = G.parity*MOTOR_TEMPO;
 	switchParity(A);
@@ -114,6 +114,7 @@ void muted_reset(Line&A, Line&G)
 		{
 			motor[G.strummingMotor] = 0;
 		}
+	}
 	}
 }
 
