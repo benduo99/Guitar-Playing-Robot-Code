@@ -34,8 +34,16 @@ string removeBlanks(string line);
 				 
 int main()
 {
-	ofstream foutA("Play_me_A.txt")
-	ofstream fougG("Play_me_G.txt")
+	ofstream foutA("Play_me_A.txt");
+	ofstream foutG("Play_me_G.txt");
+	string rawe = "|", rawB = "|", rawG= "|", rawD= "|", rawA= "|", rawE= "|";
+	string tuning [6];
+	string fileName = "Happy Birthday";
+	
+	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName);
+	
+	bool nullSpace [MAX_SIZE];
+	
 	char are[MAX_SIZE], arB[MAX_SIZE], arG[MAX_SIZE], arD[MAX_SIZE], arA[MAX_SIZE], arE[MAX_SIZE];
 	
 	string e, B, G, D, A, E;
