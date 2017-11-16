@@ -34,15 +34,17 @@ string removeBlanks(string line);
 				 
 int main()
 {
-	ofstream fout("Play_me.txt")
+	ofstream foutA("Play_me_A.txt")
+	ofstream fougG("Play_me_G.txt")
 	char are[MAX_SIZE], arB[MAX_SIZE], arG[MAX_SIZE], arD[MAX_SIZE], arA[MAX_SIZE], arE[MAX_SIZE];
 	
 	string e, B, G, D, A, E;
 	
 	string_init(e,B,G,D,A,E,rawe,rawB,rawG,rawD,rawA,rawE,are, arB, arG,arD,arA,arE);
 	
-	fout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
-				
+//	fout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
+	foutA << A;
+	foutG << G;			
 	return EXIT_SUCCESS;
 }
 

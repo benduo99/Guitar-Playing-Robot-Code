@@ -131,17 +131,34 @@ void muted_reset(Line&A, Line&G)
 
 	task main()
 	{
+		const int LONG_TAB = 100;
 	//open file and read  (file is in a string)
 //TFileHandle fin;
 //bool fileOkay = openReadPC(fin, "Play_me.txt")
+if(!fileOkay)
+{
+	displayString(0, "Failed to Open File");
+	displayString(1, "I'm not going to let you go on");
+	displayString(2, "Force terminate me plz");
+	while(true)
+	{}
+}
 	// assume we recieved the string
 		song_info Song_2;
 		Song_2.song_name = "Complex a$$ song!!!";
 	//blur reference
 		Line A;
 		Line G;
-		char NoteSeqA[] = "1-";
-		char NoteSeqG[] = "1-";
+		char NoteSeqA[LONG_TAB];
+		for (int seqIndex = 0, seqIndex < LONG_TAB, seqIndex++)
+		{
+			readCharPC(fin, NoteSeqA[seqIndex]);
+		}
+		char NoteSeqG[LONG_TAB];
+		for (int seqIndex = 0, seqIndex < LONG_TAB, seqIndex++)
+		{
+			readCharPC(fin, NoteSeqG[seqIndex]);
+		}
 
 
 		initializeLine(A, 1, 1, motorA);
@@ -151,11 +168,12 @@ void muted_reset(Line&A, Line&G)
 		{}
 	while(getButtonPress(buttonAny))
 	{}
+eraseDisplay();
 displayString(0, "Now Playing:");
 displayString(1,"%s",Song_2.song_name);
 int current = 0;
 while (NoteSeqA[current] && NoteSeqG[current])
-	//the end of the file is going to change the | to a 0
+	//the end of the file is going to return null which is false as a character
 {
 	updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
 	strum (A,G);
@@ -163,7 +181,6 @@ while (NoteSeqA[current] && NoteSeqG[current])
 	current ++;
 }
 displayString(0, "That is the end of the song:");
-displayString(1, "%s", Song_2.song_name);
 displayString(2, "Feel free to terminate me now", Song_2.song_name);
 while(!getButtonPress(buttonAny))
 {}
