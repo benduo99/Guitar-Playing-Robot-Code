@@ -131,11 +131,13 @@ void muted_reset(Line&A, Line&G)
 
 	task main()
 	{
-		const int LONG_TAB = 100;
+		const int LONG_TAB = 300;
 	//open file and read  (file is in a string)
-TFileHandle fin;
-bool fileOkay = openReadPC(fin, "Play_me.txt");
-if(!fileOkay)
+TFileHandle fin_A;
+TFileHandle fin_G;
+bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
+bool fileOkayG = openReadPC(fin_G, "Play_me_G.txt");
+if(!fileOkayA || !fileOkayG)
 {
 	displayString(0, "Failed to Open File");
 	displayString(1, "I'm not going to let you go on");
@@ -150,15 +152,24 @@ if(!fileOkay)
 		Line A;
 		Line G;
 		char NoteSeqA[LONG_TAB];
-		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
-		{
-			readCharPC(fin, NoteSeqA[seqIndex]);
-			displayString(3,"%c",NoteSeqA[seqIndex]);
-		}
 		char NoteSeqG[LONG_TAB];
+		for(int i = 0; i < LONG_TAB; i++)
+		{
+			NoteSeqA[i] = 0;
+			NoteSeqG[i] = 0;
+		}
+
+
+
 		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 		{
-			readCharPC(fin, NoteSeqG[seqIndex]);
+			readCharPC(fin_A, NoteSeqA[seqIndex]);
+		}
+
+
+		for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
+		{
+			readCharPC(fin_G, NoteSeqG[seqIndex]);
 		}
 
 
@@ -173,12 +184,14 @@ eraseDisplay();
 displayString(0, "Now Playing:");
 displayString(1,"%s",Song_2.song_name);
 int current = 0;
-while (NoteSeqA[current] != '|' && NoteSeqG[current] != '|')
+while (NoteSeqA[current] != '|' || NoteSeqG[current] != '|')
 	//the end of the file is going to return null which is false as a character
 {
 	updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
 	strum (A,G);
-	wait1Msec(100);
+			displayBigTextLine(3,"%c",NoteSeqA[current]);
+			displayBigTextLine(6,"%c",NoteSeqG[current]);
+	wait1Msec(500);
 	current ++;
 }
 displayString(0, "That is the end of the song:");
