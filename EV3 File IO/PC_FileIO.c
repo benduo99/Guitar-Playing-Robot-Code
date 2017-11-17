@@ -1,7 +1,7 @@
 /**********************************************************************
 Filename: PC_FileIO.c
-Date: November 5, 2017
-File Version: 1.3
+Date: November 16, 2017
+File Version: 1.4
 
 ASCII conversion functions so that files read or written on a PC can be
 used on the Lego EV3 or NXT bricks.  Whitespace (space, tab, enter) is needed
@@ -25,6 +25,7 @@ bool readFloatPC(TFileHandle & fin, float & number);
 
 History
 Ver  Date       Comment
+1.4  Nov 16/17  corrected release condition of having test main available
 1.3  Nov  5/17  if platform is not specified, default is now EV3
 1.2  Nov  7/16  file status is now returned as a bool; added EV3 functionality;
                 flag is used to select between NXT functions and EV3; added
