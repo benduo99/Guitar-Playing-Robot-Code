@@ -189,9 +189,9 @@ while (NoteSeqA[current] != '|' || NoteSeqG[current] != '|')
 {
 	updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
 	strum (A,G);
-			displayBigTextLine(3,"%c",NoteSeqA[current]);
-			displayBigTextLine(6,"%c",NoteSeqG[current]);
-	wait1Msec(500);
+	displayBigTextLine(3,"%c",NoteSeqA[current]);
+	displayBigTextLine(6,"%c",NoteSeqG[current]);
+	wait1Msec(100);
 	current ++;
 }
 displayString(0, "That is the end of the song:");
