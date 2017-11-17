@@ -35,10 +35,10 @@ string removeBlanks(string line);
 int main()
 {
 	ofstream foutA("Play_me_A.txt");
-	ofstream foutG("Play_me_G.txt");
+	ofstream foutG("1Play_me_G.txt");
 	string rawe = "|", rawB = "|", rawG= "|", rawD= "|", rawA= "|", rawE= "|";
 	string tuning [6];
-	string fileName = "Happy Birthday";
+	string fileName = "seven_nation_army_start";
 	
 	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName);
 	

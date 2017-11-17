@@ -183,8 +183,11 @@ if(!fileOkayA || !fileOkayG)
 eraseDisplay();
 displayString(0, "Now Playing:");
 displayString(1,"%s",Song_2.song_name);
-int current = 0;
-while (NoteSeqA[current] != '|' || NoteSeqG[current] != '|')
+
+for(int i = 0; i < 5; i++)
+{
+	int current = 0;
+while (NoteSeqA[current] != '|' && NoteSeqG[current] != '|')
 	//the end of the file is going to return null which is false as a character
 {
 	updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
@@ -193,6 +196,7 @@ while (NoteSeqA[current] != '|' || NoteSeqG[current] != '|')
 	displayBigTextLine(6,"%c",NoteSeqG[current]);
 	wait1Msec(100);
 	current ++;
+}
 }
 displayString(0, "That is the end of the song:");
 displayString(2, "Feel free to terminate me now", Song_2.song_name);
