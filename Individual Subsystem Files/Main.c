@@ -45,6 +45,7 @@ task main()
 
 	for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 	{
+		// IF THIS BREAKS, NIEL COMBINED TWO FOR LOOPS INTO ONE. 
 		readCharPC(fin_A, NoteSeqA[seqIndex]);
 		readCharPC(fin_G, NoteSeqG[seqIndex]);
 	}
