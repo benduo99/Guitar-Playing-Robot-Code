@@ -8,8 +8,6 @@ const int DEGREE_OF_ROTATION = 45;
 typedef struct
 {
 	//notes for string A
-	char NoteSeqA[100];
-	char NoteSeqB[100];
 	string song_name;
 	//asssume that can output number of notes including dashes to play
 }song_info;
@@ -21,7 +19,7 @@ task main()
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
-	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
+	bool fileOkayB = openReadPC(fin_B, "Play_me_G.txt");
 	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
@@ -68,12 +66,12 @@ task main()
 	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
-		updateNote(A, G, NoteSeqA[current], NoteSeqB[current]);
+		updateNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 
 		strum (A,B);
 
-		displayBigTextLine(3,"%c",NoteSeqA[current]);
-		displayBigTextLine(6,"%c",NoteSeqB[current]);
+	//	displayBigTextLine(3,"%c",NoteSeqA[current]);
+	//	displayBigTextLine(6,"%c",NoteSeqB[current]);
 
 		wait1Msec(100);
 
