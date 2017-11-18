@@ -70,8 +70,8 @@ task main()
 
 		strum (A,B);
 
-	//	displayBigTextLine(3,"%c",NoteSeqA[current]);
-	//	displayBigTextLine(6,"%c",NoteSeqB[current]);
+		displayBigTextLine(3,"%c",NoteSeqA[current]);
+		displayBigTextLine(6,"%c",NoteSeqB[current]);
 
 		wait1Msec(100);
 
