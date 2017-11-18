@@ -17,7 +17,7 @@ void string2array(char are[],char arB[], char arG[], char arD [], char arA[],
 
 void encodeArray(char ar[]);	
 
-char encodeNums(string number);	
+char encodeNums(int value);	
 
 string array2string(char ar[]);
 
@@ -31,12 +31,19 @@ string markBarLines(string line);
 void findBlanks(char are[],char arB[], char arG[], 
 		char arD [], char arA[], char arE[]);
 	
-string removeBlanks(string line);			
+string removeBlanks(string line);		
+
+void mergeStrings(string topString, string midString, string lowString, 
+		string & final, bool top);	
+		
+char stringConversion(char note, char string);
+
+int decodeNote(char note);		
 				 
-int main()
+int main() //program assumes tablature is written correctly
 {
 		ofstream foutA("Play_me_A.txt");
-		ofstream foutG("Play_me_G.txt");
+		ofstream foutB("Play_me_G.txt");
 
 		string fileName = "Happy Birthday.txt";
 		
@@ -59,19 +66,23 @@ int main()
 	
 	string_init(e,B,G,D,A,E,rawe,rawB,rawG,rawD,rawA,rawE,are, arB, arG,arD,arA,arE);
 	
-//	cout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
-	foutA << A;
-	foutG << G;			
+	//cout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E <<endl;
+	
+	string outA, outB;
+	
+	mergeStrings(e, B, G, outB, true);
+	mergeStrings(D, A, E, outA, false);
+	
+	//cout << endl << outB << endl << outA;
+	
+	foutA << outA;
+	foutB << outB;			
 	return EXIT_SUCCESS;
 }
 
 bool getTab(string &e, string &B, string &G, string &D,
 		string &A, string &E, string (&tuning)[6],string fileName, ifstream & fin)
 	{
-		
-	
-
-	
 	char note;
 	int stringnum = 0;
 	int stringPitch =0;
@@ -137,18 +148,18 @@ bool getTab(string &e, string &B, string &G, string &D,
 
 void array_init(char e[],char B[], char G[], char D [], char A[], char E[])
 {
-	for(int i=0; i< MAX_SIZE; i++)
+	for(int place=0; place< MAX_SIZE; place++)
 	{
-		e[i]=B[i]=G[i]=D[i]=A[i]=E[i]='#';
+		e[place]=B[place]=G[place]=D[place]=A[place]=E[place]='#';
 	}
 }
 
 void string2array(char are[],char arB[], char arG[], char arD [], char arA[], 
 		char arE[], string e, string B, string G, string D, string A, string E)
 {
-	for(int i=0; i<e.length(); i++)
+	for(int place=0; place<e.length(); place++)
 	{
-	int position =i; //compiler issue
+	int position =place; //compiler issue
 	are[position]=e[position];
 	arB[position]=B[position];
 	arG[position]=G[position];
@@ -174,18 +185,18 @@ void encodeArray(char ar[])
 				note += ar[position+1];
 				ar[position+1] ='%';	
 			}
-			
-		ar[position] = encodeNums(note);
+		
+		int noteValue = atoi(note.c_str());	
+		ar[position] = encodeNums(noteValue);
 		
 		}
 		position++;
 	}
 }
 
-char encodeNums(string number)
+char encodeNums(int value)
 {
 	char note;
-	int value = atoi(number.c_str());
 	// A is 65, B is 66 ...
 	if(value>0&&value<=12)
 		note = (char)value + 64;
@@ -217,7 +228,8 @@ void string_init(string &e, string &B, string &G, string &D,string &A,
 		char arD [], char arA[], char arE[])
 {
 	array_init(are, arB, arG, arD, arA, arE);
-	string2array(are, arB, arG, arD, arA, arE, rawe, rawB, rawG, rawD, rawA, rawE);
+	string2array(are, arB, arG, arD, arA, arE, rawe, rawB, rawG, rawD, rawA, 
+	rawE);
 
 	encodeArray(are);
 	encodeArray(arB);
@@ -272,4 +284,72 @@ string removeBlanks(string line)
 	}
 	return lineRemoved;
 }
+
+// --The following code pertains only to the current 2 string prototype-------
+//--Its role is to convert notes on other strings to the two we are using
+
+void mergeStrings(string topString, string midString, string lowString, 
+		string & final, bool top)
+{
+	for(int place = 0; place < midString.length(); place++)
+	{
+		char stringName;
+		if(midString[place]=='-')      
+		{
+			if(lowString[place]!='-')
+			{
+				if(top ==true)
+					stringName = 'G';	
+				else
+					stringName = 'E';	
+						
+				final+=stringConversion(lowString[place], stringName);	
+			}
+			else if(topString[place]!='-')
+			{
+				if(top ==true)
+					stringName = 'e';	
+				else
+					stringName = 'D';	
+				
+				final+=stringConversion(topString[place], stringName);
+			}
+			else
+			{
+				final+='-';
+			}
+		}
+		else
+		{
+			final+=midString[place];
+		}	
+	}
+}
+
+char stringConversion(char note, char string)
+{
+	//this function deals primarly with the nuances in guitar standard tuning
+	if(string == 'e' || string == 'D')
+	{
+		int noteValue = decodeNote(note)+5;
+		return encodeNums(noteValue);
+	}
+	else if(string == 'G')
+	{
+		int noteValue = decodeNote(note)+8;
+		return encodeNums(noteValue);
+	}
+	else
+	{
+		int noteValue = decodeNote(note)+7;
+		return encodeNums(noteValue);
+	}
+}
+
+int decodeNote(char note) //turns letteres A - L into frets 1- 12
+{
+	//A is 65, B is 66..
+	return (int)note -64;	
+}
+
 
