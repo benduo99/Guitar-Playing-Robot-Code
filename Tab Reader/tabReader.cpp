@@ -1,12 +1,13 @@
 #include <fstream>
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
 const int MAX_SIZE = 10000;
 
 bool getTab(string &e, string &B, string &G, string &D,
-		string &A, string &E, string (&tuning)[6], string fileName);
+		string &A, string &E, string (&tuning)[6], string fileName, ifstream & fin);
 
 void array_init(char e[],char B[], char G[], char D [], char A[],
 		 char E[]);
@@ -34,15 +35,23 @@ string removeBlanks(string line);
 				 
 int main()
 {
-	ofstream foutA("Play_me_A.txt");
-	ofstream foutG("1Play_me_G.txt");
+		ofstream foutA("Play_me_A.txt");
+		ofstream foutG("Play_me_G.txt");
+
+		string fileName = "Happy Birthday.txt";
+		
+		ifstream fin(fileName.c_str());	
+		
+		if(!fin)
+	{
+		cout << "File not Found";
+		return EXIT_FAILURE;
+	}
+
 	string rawe = "|", rawB = "|", rawG= "|", rawD= "|", rawA= "|", rawE= "|";
 	string tuning [6];
-	string fileName = "seven_nation_army_start";
-	
-	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName);
-	
-	bool nullSpace [MAX_SIZE];
+
+	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName, fin);
 	
 	char are[MAX_SIZE], arB[MAX_SIZE], arG[MAX_SIZE], arD[MAX_SIZE], arA[MAX_SIZE], arE[MAX_SIZE];
 	
@@ -50,23 +59,18 @@ int main()
 	
 	string_init(e,B,G,D,A,E,rawe,rawB,rawG,rawD,rawA,rawE,are, arB, arG,arD,arA,arE);
 	
-//	fout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
+//	cout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
 	foutA << A;
 	foutG << G;			
 	return EXIT_SUCCESS;
 }
 
 bool getTab(string &e, string &B, string &G, string &D,
-		string &A, string &E, string (&tuning)[6],string fileName)
+		string &A, string &E, string (&tuning)[6],string fileName, ifstream & fin)
 	{
 		
-	string readFile = fileName+ ".txt";
-	ifstream fin(readFile.c_str());	
-		
-	if(!fin)
-	{
-		return EXIT_FAILURE;
-	}	
+	
+
 	
 	char note;
 	int stringnum = 0;
