@@ -1,8 +1,10 @@
+const int MOTOR_TEMPO = 75;
+const int DEGREE_OF_ROTATION = 45;
+
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
 #include "strummer.c"
-const int MOTOR_TEMPO = 75;
-const int DEGREE_OF_ROTATION = 45;
+
 typedef struct
 {
 	//notes for string A
@@ -45,7 +47,7 @@ task main()
 
 	for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 	{
-		// IF THIS BREAKS, NIEL COMBINED TWO FOR LOOPS INTO ONE. 
+		// IF THIS BREAKS, NIEL COMBINED TWO FOR LOOPS INTO ONE.
 		readCharPC(fin_A, NoteSeqA[seqIndex]);
 		readCharPC(fin_G, NoteSeqG[seqIndex]);
 	}
@@ -62,6 +64,7 @@ task main()
 	displayString(0, "Now Playing:");
 	displayString(1,"%s",Song_2.song_name);
 
+	int current = 0;
 	while (NoteSeqA[current] != '|' && NoteSeqG[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
@@ -89,6 +92,6 @@ task main()
 	motor[A.strummingMotor] = motor[G.strummingMotor] = 0;
 
 	displayString(0,"Thanks :)");
-	
+
 	wait1Msec(5000);
 }
