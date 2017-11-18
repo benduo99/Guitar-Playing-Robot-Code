@@ -36,7 +36,7 @@ void noteDist(Line & object_A, Line & object_B, double & dist_A, double & dist_B
 {
 	//accessing the array with the distances
 	dist_A = (distance[conversion(object_A.currentNote)] - distance[conversion(object_A.previousNote)])*360/WHEEL_RADIUS;
-	dist_B = (distance[conversion(object_B.currentNote)] - distnace[conversion(object_B.previousNote);])*360/WHEEL_RADIUS;
+	dist_B = (distance[conversion(object_B.currentNote)] - distance[conversion(object_B.previousNote);])*360/WHEEL_RADIUS;
 }
 
 void moveFrets(Line & object_A, Line & object_B)
