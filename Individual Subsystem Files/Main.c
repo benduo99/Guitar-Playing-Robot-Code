@@ -9,7 +9,7 @@ typedef struct
 {
 	//notes for string A
 	char NoteSeqA[100];
-	char NoteSeqG[100];
+	char NoteSeqB[100];
 	string song_name;
 	//asssume that can output number of notes including dashes to play
 }song_info;
@@ -19,10 +19,10 @@ task main()
 	const int LONG_TAB = 300;
 	//open file and read  (file is in a string)
 	TFileHandle fin_A;
-	TFileHandle fin_G;
+	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
-	bool fileOkayG = openReadPC(fin_G, "Play_me_G.txt");
-	if(!fileOkayA || !fileOkayG)
+	bool fileOkayB = openReadPC(fin_B, "Play_me_G.txt");
+	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
 		displayString(1, "I'm not going to let you go on");
@@ -36,24 +36,24 @@ task main()
 	Song_2.song_name = "Complex a$$ song!!!";
 	//blur reference
 	Line A;
-	Line G;
+	Line B;
 	char NoteSeqA[LONG_TAB];
-	char NoteSeqG[LONG_TAB];
+	char NoteSeqB[LONG_TAB];
 	for(int i = 0; i < LONG_TAB; i++)
 	{
 		NoteSeqA[i] = 0;
-		NoteSeqG[i] = 0;
+		NoteSeqB[i] = 0;
 	}
 
 	for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 	{
 		// IF THIS BREAKS, NIEL COMBINED TWO FOR LOOPS INTO ONE.
 		readCharPC(fin_A, NoteSeqA[seqIndex]);
-		readCharPC(fin_G, NoteSeqG[seqIndex]);
+		readCharPC(fin_B, NoteSeqB[seqIndex]);
 	}
 
 	initializeLine(A, 1, 1, motorA);
-	initializeLine(G, 2, 2, motorB);
+	initializeLine(B, 2, 2, motorB);
 
 	while(!getButtonPress(buttonAny))
 	{}
@@ -65,15 +65,15 @@ task main()
 	displayString(1,"%s",Song_2.song_name);
 
 	int current = 0;
-	while (NoteSeqA[current] != '|' && NoteSeqG[current] != '|')
+	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
-		updateNote(A, G, NoteSeqA[current], NoteSeqG[current]);
+		updateNote(A, G, NoteSeqA[current], NoteSeqB[current]);
 
-		strum (A,G);
+		strum (A,B);
 
 		displayBigTextLine(3,"%c",NoteSeqA[current]);
-		displayBigTextLine(6,"%c",NoteSeqG[current]);
+		displayBigTextLine(6,"%c",NoteSeqB[current]);
 
 		wait1Msec(100);
 
@@ -87,9 +87,9 @@ task main()
 	while(getButtonPress(buttonAny))
 	{}
 
-	muted_reset (A,G);
+	muted_reset (A,B);
 
-	motor[A.strummingMotor] = motor[G.strummingMotor] = 0;
+	motor[A.strummingMotor] = motor[B.strummingMotor] = 0;
 
 	displayString(0,"Thanks :)");
 
