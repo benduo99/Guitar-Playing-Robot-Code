@@ -13,7 +13,7 @@ typedef struct
 }song_info;
 
 task main()
-{1
+{
 	const int LONG_TAB = 300;
 	//open file and read  (file is in a string)
 	TFileHandle fin_A;
