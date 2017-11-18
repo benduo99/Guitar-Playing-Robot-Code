@@ -17,13 +17,17 @@ void zero()
 			motor[B.pulleyMotor] = 0;
 	}
 
-	nMotorEncoder[A.pulleyMotor] = 0;
+	nMotorEncoder[A.pulleyMotor] = 0, nMotorEncoder[B.pulleyMotor] = 0;
 	wait1Msec(500);
 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
-	while(nMotorEncoder[A.pulleyMotor]<(1.74498/2.5*360))
-	{}
-	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
+	while(nMotorEncoder[A.pulleyMotor]<(1.74498/WHEEL_RADIUS*360) && nMotorEncoder[B.pulleyMotor]<(1.74498/WHEEL_RADIUS*360))
+	{
+		if(nMotorEncoder[A.pulleyMotor] == (1.74498/WHEEL_RADIUS*360))
+			motor[A.pulleyMotor] = 0;
+		if(nMotorEncoder[B.pulleyMotor] == (1.74498/WHEEL_RADIUS*360))
+			motor[B.pulleyMotor] = 0;
+	}
 }
 
 int conversion(char note)
@@ -49,12 +53,13 @@ void moveFrets(Line & object_A, Line & object_B)
 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=100; //whatever the power is to pull the finger to a higher fret
 
-	while(fabs(nMotorEncoder[A.pulleyMotor]) < fabs(dist_A) && fabs(nMotorEncoder[B.pulleyMotor]) < fabs(dist_B))
+	while(abs(nMotorEncoder[A.pulleyMotor]) <= fabs(dist_A) || abs(nMotorEncoder[B.pulleyMotor]) <= fabs(dist_B))
 	{
-		if(nMotorEncoder[A.pulleyMotor] == dist_A)
+		if(abs(nMotorEncoder[A.pulleyMotor]) >= fabs(dist_A))
 			motor[A.pulleyMotor] = 0;
 
-		if(nMotorEncoder[B.pulleyMotor] == dist_B)
+		if(abs(nMotorEncoder[B.pulleyMotor]) >= fabs(dist_B))
 			motor[B.pulleyMotor] = 0;
 	}
+	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
 }
