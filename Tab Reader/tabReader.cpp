@@ -43,7 +43,7 @@ int decodeNote(char note);
 int main() //program assumes tablature is written correctly
 {
 		ofstream foutA("Play_me_A.txt");
-		ofstream foutB("Play_me_G.txt");
+		ofstream foutB("Play_me_B.txt");
 
 		string fileName = "Happy Birthday.txt";
 		
