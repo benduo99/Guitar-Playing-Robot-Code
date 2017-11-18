@@ -21,7 +21,7 @@ task main()
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
-	bool fileOkayB = openReadPC(fin_B, "Play_me_G.txt");
+	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
 	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
