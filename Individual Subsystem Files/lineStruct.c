@@ -4,7 +4,7 @@ typedef struct
 	tMotor pulleyMotor;
 	tSensors touchPort;
 	char currentNote;
-//	char previousNote;
+	char previousNote;
 
 	// Strumming Stuff
 	tMotor strummingMotor;
@@ -12,11 +12,11 @@ typedef struct
 } Line;
 void updateNote (Line & object_A, Line & object_B, char note_A, char note_B)
 {
-	/*if (object_A.currentNote != '-')
+	if (object_A.currentNote != '-')
 		object_A.previousNote = object_A.currentNote;
 	if (object_B.currentNote != '-')
 		object_B.previousNote = object_B.currentNote;
-*/
+
 	object_A.currentNote = note_A;
 	object_B.currentNote = note_B;
 }
@@ -26,7 +26,7 @@ void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMot
 	object.pulleyMotor = pulleyMotor;
 	object.touchPort = touchPort;
 	object.currentNote = '-';
-	//object.previousNote = 'A';	// Talk to Sam about this, where will it start according to his note generator
+	object.previousNote = 'A';
 	object.strummingMotor = strummingMotor;
 	object.parity = 1;
 }
