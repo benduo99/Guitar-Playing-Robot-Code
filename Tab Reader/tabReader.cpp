@@ -1,6 +1,5 @@
 #include <fstream>
 #include <cstdlib>
-#include <iostream>
 
 using namespace std;
 
@@ -35,9 +34,11 @@ string removeBlanks(string line);
 				 
 int main()
 {
+	ofstream foutA("Play_me_A.txt");
+	ofstream foutG("1Play_me_G.txt");
 	string rawe = "|", rawB = "|", rawG= "|", rawD= "|", rawA= "|", rawE= "|";
 	string tuning [6];
-	string fileName = "Happy Birthday";
+	string fileName = "seven_nation_army_start";
 	
 	getTab(rawe, rawB, rawG, rawD, rawA, rawE, tuning, fileName);
 	
@@ -49,8 +50,9 @@ int main()
 	
 	string_init(e,B,G,D,A,E,rawe,rawB,rawG,rawD,rawA,rawE,are, arB, arG,arD,arA,arE);
 	
-	cout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
-				
+//	fout << e<<endl<<B<<endl<<G<<endl<<D<<endl<<A<<endl<<E   ;
+	foutA << A;
+	foutG << G;			
 	return EXIT_SUCCESS;
 }
 
@@ -63,8 +65,7 @@ bool getTab(string &e, string &B, string &G, string &D,
 		
 	if(!fin)
 	{
-		cout << "File not found";
-		return false;
+		return EXIT_FAILURE;
 	}	
 	
 	char note;
@@ -187,7 +188,7 @@ char encodeNums(string number)
 	else if (value>12&&value<=24)
 		note = (char)value +52;
 	else if (value == 0)
-		note = 'L';		
+		note = 'M';		
 	else
 		note = '-';
 	return note;	
