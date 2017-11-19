@@ -23,7 +23,7 @@ task main()
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
-	bool fileOkayB = openReadPC(fin_B, "Play_me_G.txt");
+	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
 	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
@@ -74,8 +74,8 @@ task main()
 		updateNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		strum (A,B);
 
-		displayBigTextLine(3,"%c %d",NoteSeqA[current], signA);
-		displayBigTextLine(6,"%c %d",NoteSeqB[current], signB);
+		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
+		displayBigTextLine(6,"%c %d",NoteSeqB[current]);
 
 		wait1Msec(100);
 

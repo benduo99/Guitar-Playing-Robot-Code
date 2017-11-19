@@ -45,7 +45,7 @@ int main() //program assumes tablature is written correctly
 		ofstream foutA("Play_me_A.txt");
 		ofstream foutB("Play_me_B.txt");
 
-		string fileName = "Happy Birthday.txt";
+		string fileName = "song.txt";
 		
 		ifstream fin(fileName.c_str());	
 		
