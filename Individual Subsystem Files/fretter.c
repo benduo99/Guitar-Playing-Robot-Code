@@ -5,6 +5,7 @@ float const WHEEL_RADIUS = 2.5;
 //segment of code, using structs and parts from other pieces of code.
 
 //written by Ben Duo
+
 void zero(Line & A, Line & B)
 {
 	//test for motor direction and motor slot
@@ -39,13 +40,13 @@ int conversion(char note)
 void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 {
 	//accessing the array with the distances
-	dist_A = distance[3];
-	dist_A = ((distance[(conversion(A.currentNote))] - distance[(conversion(A.previousNote))])*360/WHEEL_RADIUS);
-	dist_B = ((distance[conversion(B.currentNote)] - distance[conversion(B.previousNote)])*360/WHEEL_RADIUS);
+	dist_A = ((DISTANCE[(conversion(A.currentNote))] - DISTANCE[(conversion(A.previousNote))])*360/WHEEL_RADIUS);
+	dist_B = ((DISTANCE[conversion(B.currentNote)] - DISTANCE[conversion(B.previousNote)])*360/WHEEL_RADIUS);
 }
 
 void moveFrets(Line & A, Line & B)
 {
+	time1[T1] = 0;
 	float dist_A = 0, dist_B = 0;
 	noteDist(A, B, dist_A, dist_B);
 	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
@@ -63,4 +64,6 @@ void moveFrets(Line & A, Line & B)
 			motor[B.pulleyMotor] = 0;
 	}
 	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
+	while (time1[T1] <= STRUM_TIME)
+	{}
 }

@@ -1,6 +1,7 @@
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
-float distance[12] = {0, 3.32486, 6.4008, 9.28243, 11.99515, 14.54658, 16.9164, 19.16557, 21.26996, 23.23211, 25.08504, 26.81224};
+const int STRUM_TIME = 1000;
+const float DISTANCE[12] = {0, 3.32486, 6.4008, 9.28243, 11.99515, 14.54658, 16.9164, 19.16557, 21.26996, 23.23211, 25.08504, 26.81224};
 
 
 #include "EV3_FileIO.c"
@@ -70,7 +71,7 @@ task main()
 	//the end of the file is going to return null which is false as a character
 	{
 		updateNote(A, B, NoteSeqA[current], NoteSeqB[current]);
-
+		moveFrets(A,B);
 		strum (A,B);
 
 		displayBigTextLine(3,"%c",NoteSeqA[current]);
