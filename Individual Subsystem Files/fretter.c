@@ -1,4 +1,5 @@
-float const WHEEL_RADIUS = 2.5;
+float const WHEEL_RADIUS = 1.2;
+float const PULLEY_POWER = 80;
 
 //get actual measurement
 
@@ -12,7 +13,7 @@ int direction(int a)
 	{
 		return 0;
 	}
-	return a/abs(a);
+	return -a/abs(a);
 }
 void waitForButtonPress1()
 {
@@ -58,7 +59,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 	// accessing the array with the distances
 	if(A.currentNote != '-')
 	{
-		dist_A = ((DISTANCE[conversion(A.currentNote)] - DISTANCE[conversion(A.previousNote)])*360/WHEEL_RADIUS);
+		dist_A = ((DISTANCE[conversion(A.currentNote)] - DISTANCE[conversion(A.previousNote)])*360/(2*PI*WHEEL_RADIUS));
 	}
 	else
 	{
@@ -66,7 +67,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 	}
 	if(B.currentNote != '-')
 	{
-		dist_B = ((DISTANCE[conversion(B.currentNote)] - DISTANCE[conversion(B.previousNote)])*360/WHEEL_RADIUS);
+		dist_B = ((DISTANCE[conversion(B.currentNote)] - DISTANCE[conversion(B.previousNote)])*360/(2*PI*WHEEL_RADIUS));
 	}
 	else
 	{
@@ -85,12 +86,12 @@ void moveFrets(Line & A, Line & B)
 
 	//if both fingers need to be moved to a higher pitch
 
-	motor[A.pulleyMotor] = direction(dist_A) * 100;
-	motor[B.pulleyMotor] = direction(dist_B) * 100;
+	motor[A.pulleyMotor] = direction(dist_A) * PULLEY_POWER;
+	motor[B.pulleyMotor] = direction(dist_B) * PULLEY_POWER;
 
 	while(abs(nMotorEncoder[A.pulleyMotor]) < fabs(dist_A) || abs(nMotorEncoder[B.pulleyMotor]) < fabs(dist_B))
 	{
-		
+
 		// waitForButtonPress1();
 		if(abs(nMotorEncoder[A.pulleyMotor]) >= fabs(dist_A))
 			motor[A.pulleyMotor] = 0;
