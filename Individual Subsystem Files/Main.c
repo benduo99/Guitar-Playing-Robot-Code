@@ -1,5 +1,7 @@
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
+float distance[12] = {0, 3.32486, 6.4008, 9.28243, 11.99515, 14.54658, 16.9164, 19.16557, 21.26996, 23.23211, 25.08504, 26.81224};
+
 
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
@@ -15,7 +17,6 @@ typedef struct
 
 task main()
 {
-	const float distance[12] = {0, 3.32486, 6.4008, 9.28243, 11.99515, 14.54658, 16.9164, 19.16557, 21.26996, 23.23211, 25.08504, 26.81224};
 	const int LONG_TAB = 300;
 	//open file and read  (file is in a string)
 	TFileHandle fin_A;

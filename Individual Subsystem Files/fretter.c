@@ -36,11 +36,12 @@ int conversion(char note)
 }
 
 //finds distance in terms of degrees
-void noteDist(Line & A, Line & B, float & dist_A, float & dist_B, float distance[])
+void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 {
 	//accessing the array with the distances
-	dist_A = (distance[conversion(A.currentNote)] - distance[conversion(A.previousNote)])*360/WHEEL_RADIUS;
-	dist_B = (distance[conversion(B.currentNote)] - distance[conversion(B.previousNote)])*360/WHEEL_RADIUS;
+	dist_A = distance[3];
+	dist_A = ((distance[(conversion(A.currentNote))] - distance[(conversion(A.previousNote))])*360/WHEEL_RADIUS);
+	dist_B = ((distance[conversion(B.currentNote)] - distance[conversion(B.previousNote)])*360/WHEEL_RADIUS);
 }
 
 void moveFrets(Line & A, Line & B)
