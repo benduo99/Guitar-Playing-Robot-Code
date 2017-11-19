@@ -1,10 +1,11 @@
 float const WHEEL_RADIUS = 2.5;
+
 //get actual measurement
 
 //segment of code, using structs and parts from other pieces of code.
 
 //written by Ben Duo
-void zero()
+void zero(Line & A, Line & B)
 {
 	//test for motor direction and motor slot
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=20;
@@ -17,8 +18,7 @@ void zero()
 			motor[B.pulleyMotor] = 0;
 	}
 
-	nMotorEncoder[A.pulleyMotor] = 0, nMotorEncoder[B.pulleyMotor] = 0;
-	wait1Msec(500);
+	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
 	while(nMotorEncoder[A.pulleyMotor]<(1.74498/WHEEL_RADIUS*360) && nMotorEncoder[B.pulleyMotor]<(1.74498/WHEEL_RADIUS*360))
@@ -36,22 +36,22 @@ int conversion(char note)
 }
 
 //finds distance in terms of degrees
-void noteDist(Line & object_A, Line & object_B, double & dist_A, double & dist_B)
+void noteDist(Line & A, Line & B, float & dist_A, float & dist_B, float distance[])
 {
 	//accessing the array with the distances
-	dist_A = (distance[conversion(object_A.currentNote)] - distance[conversion(object_A.previousNote)])*360/WHEEL_RADIUS;
-	dist_B = (distance[conversion(object_B.currentNote)] - distance[conversion(object_B.previousNote);])*360/WHEEL_RADIUS;
+	dist_A = (distance[conversion(A.currentNote)] - distance[conversion(A.previousNote)])*360/WHEEL_RADIUS;
+	dist_B = (distance[conversion(B.currentNote)] - distance[conversion(B.previousNote)])*360/WHEEL_RADIUS;
 }
 
-void moveFrets(Line & object_A, Line & object_B)
+void moveFrets(Line & A, Line & B)
 {
-	double dist_A = 0, dist_B = 0;
-	noteDist(object_A, object_B, dist_A, dist_B);
-	nMotorEncoder[A.pulleyMotor] = 0, nMotorEncoder[B.pulleyMotor] = 0;
+	float dist_A = 0, dist_B = 0;
+	noteDist(A, B, dist_A, dist_B);
+	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
 
 	//if both fingers need to be moved to a higher pitch
 
-	motor[A.pulleyMotor]=motor[B.pulleyMotor]=100; //whatever the power is to pull the finger to a higher fret
+	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 100; //whatever the power is to pull the finger to a higher fret
 
 	while(abs(nMotorEncoder[A.pulleyMotor]) <= fabs(dist_A) || abs(nMotorEncoder[B.pulleyMotor]) <= fabs(dist_B))
 	{
