@@ -42,10 +42,9 @@ int decodeNote(char note);
 				 
 int main() //program assumes tablature is written correctly
 {
-		ofstream foutA("Play_me_A.txt");
-		ofstream foutB("Play_me_B.txt");
-
-		string fileName = "Happy Birthday.txt";
+		cout << "Enter name of file:" << endl;
+		string fileName;
+		cin >> fileName;
 		
 		ifstream fin(fileName.c_str());	
 		
@@ -74,9 +73,13 @@ int main() //program assumes tablature is written correctly
 	mergeStrings(D, A, E, outA, false);
 	
 	//cout << endl << outB << endl << outA;
+	ofstream foutA("Play_me_A.txt");
+	ofstream foutB("Play_me_B.txt");
 	
 	foutA << outA;
-	foutB << outB;			
+	foutB << outB;	
+	
+	cout << endl<<  "Tab conversion successfull";		
 	return EXIT_SUCCESS;
 }
 

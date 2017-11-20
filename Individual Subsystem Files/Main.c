@@ -1,9 +1,13 @@
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
+const int STRUM_TIME = 500;
+const float DISTANCE[12] = {0, 3.644, 6.922, 9.844, 12.535, 15.363, 17.760, 20.546, 22.693, 24.640, 25.714, 28.651};
+
 
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
 #include "strummer.c"
+#include "fretter.c"
 
 typedef struct
 {
@@ -14,12 +18,12 @@ typedef struct
 
 task main()
 {
-	const int LONG_TAB = 300;
+	const int LONG_TAB = 100;
 	//open file and read  (file is in a string)
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
-	bool fileOkayB = openReadPC(fin_B, "Play_me_G.txt");
+	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
 	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
@@ -50,8 +54,8 @@ task main()
 		readCharPC(fin_B, NoteSeqB[seqIndex]);
 	}
 
-	initializeLine(A, 1, 1, motorA);
-	initializeLine(B, 2, 2, motorB);
+	initializeLine(A, motorC, 1, motorA);
+	initializeLine(B, motorD, 2, motorB);
 
 	while(!getButtonPress(buttonAny))
 	{}
@@ -66,12 +70,12 @@ task main()
 	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
+		moveFrets(A,B);
 		updateNote(A, B, NoteSeqA[current], NoteSeqB[current]);
-
 		strum (A,B);
 
-	//	displayBigTextLine(3,"%c",NoteSeqA[current]);
-	//	displayBigTextLine(6,"%c",NoteSeqB[current]);
+		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
+		displayBigTextLine(6,"%c %d",NoteSeqB[current]);
 
 		wait1Msec(100);
 

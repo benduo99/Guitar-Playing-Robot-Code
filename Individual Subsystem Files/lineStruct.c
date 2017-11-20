@@ -35,3 +35,4 @@ void switchParity (Line & object)
 {
 	object.parity *= -1;
 }
+

@@ -1,4 +1,4 @@
-void strum(Line A, Line B)
+void strum(Line & A, Line & B)
 {
 	bool aIsRunning = false;
 	bool bIsRunning = false;
@@ -57,7 +57,7 @@ void muted_reset(Line&A, Line&B)
 	while(aIsRight && (abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || bIsRight && (abs(nMotorEncoder[B.strummingMotor]) < DEGREE_OF_ROTATION))
 	{
 		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
-		{		
+		{
 			motor[A.strummingMotor] = 0;
 		}
 		if(abs(nMotorEncoder[B.strummingMotor]) >= DEGREE_OF_ROTATION)
