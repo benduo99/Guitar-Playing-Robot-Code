@@ -18,15 +18,15 @@ typedef struct
 
 task main()
 {
+	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
+	if(!fileOkayA || !fileOkayB)
+	{
+		displayString(0, "Failed to Open File");
 	const int LONG_TAB = 100;
 	//open file and read  (file is in a string)
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
-	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
-	if(!fileOkayA || !fileOkayB)
-	{
-		displayString(0, "Failed to Open File");
 		displayString(1, "I'm not going to let you go on");
 		displayString(2, "Force terminate me plz");
 		while(true)
@@ -54,8 +54,8 @@ task main()
 		readCharPC(fin_B, NoteSeqB[seqIndex]);
 	}
 
-	initializeLine(A, motorC, 1, motorA);
-	initializeLine(B, motorD, 2, motorB);
+	initializeLine(A, motorC, S1, motorA);
+	initializeLine(B, motorD, S2, motorB);
 
 	while(!getButtonPress(buttonAny))
 	{}
@@ -67,7 +67,7 @@ task main()
 	displayString(1,"%s",Song_2.song_name);
 
 	int current = 0;
-	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
+	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|' && current < LONG_TAB)
 	//the end of the file is going to return null which is false as a character
 	{
 		moveFrets(A,B);

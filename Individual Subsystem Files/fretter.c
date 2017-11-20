@@ -39,13 +39,17 @@ void zero(Line & A, Line & B)
 	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
-	while(nMotorEncoder[A.pulleyMotor]<(1.74498/WHEEL_RADIUS*360) && nMotorEncoder[B.pulleyMotor]<(1.74498/WHEEL_RADIUS*360))
+
+	// Move a cm bac to 0 pos
+	while(abs(nMotorEncoder[A.pulleyMotor]<(360/(2 * PI * WHEEL_RADIUS))) || abs(nMotorEncoder[B.pulleyMotor]<(360/(2*PI*WHEEL_RADIUS)))
 	{
-		if(nMotorEncoder[A.pulleyMotor] == (1.74498/WHEEL_RADIUS*360))
+		if(abs(nMotorEncoder[A.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
 			motor[A.pulleyMotor] = 0;
-		if(nMotorEncoder[B.pulleyMotor] == (1.74498/WHEEL_RADIUS*360))
+		if(abs(nMotorEncoder[B.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
 			motor[B.pulleyMotor] = 0;
 	}
+
+	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
 }
 
 int conversion(char note)
