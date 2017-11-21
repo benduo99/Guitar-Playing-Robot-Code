@@ -59,7 +59,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 	// accessing the array with the distances
 	if(A.currentNote != '-')
 	{
-		dist_A = ((DISTANCE[conversion(A.currentNote)] - DISTANCE[conversion(A.previousNote)])*360/(2*PI*WHEEL_RADIUS));
+		dist_A = ((DISTANCE[conversion(A.currentNote)] - DISTANCE[conversion(A.currentPosition)])*360/(2*PI*WHEEL_RADIUS));
 	}
 	else
 	{
@@ -67,7 +67,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 	}
 	if(B.currentNote != '-')
 	{
-		dist_B = ((DISTANCE[conversion(B.currentNote)] - DISTANCE[conversion(B.previousNote)])*360/(2*PI*WHEEL_RADIUS));
+		dist_B = ((DISTANCE[conversion(B.currentNote)] - DISTANCE[conversion(B.currentPosition)])*360/(2*PI*WHEEL_RADIUS));
 	}
 	else
 	{

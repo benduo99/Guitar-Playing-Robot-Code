@@ -70,9 +70,10 @@ task main()
 	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
+		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		updateNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		strum (A,B);
+		updateCurrentPosition(A,B);
 
 		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
 		displayBigTextLine(6,"%c %d",NoteSeqB[current]);
