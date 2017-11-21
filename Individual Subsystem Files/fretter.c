@@ -82,6 +82,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 void moveFrets(Line & A, Line & B)
 {
 	time1[T1] = 0;
+	mute(A,B);
 	float dist_A = 0, dist_B = 0;
 	noteDist(A, B, dist_A, dist_B);
 	displayBigTextLine(0, "%.2f     %.2f", dist_A, dist_B);
@@ -105,6 +106,7 @@ void moveFrets(Line & A, Line & B)
 	}
 	displayString(6, "heyyyyy");
 	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
+	unmute(A,B);
 	while (time1[T1] <= STRUM_TIME)
 	{}
 }

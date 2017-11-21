@@ -35,9 +35,52 @@ void strum(Line & A, Line & B)
 	wait1Msec(500);
 }
 
+void mute(Line&A, Line&B)
+{
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(B.strummingMotor);
+
+	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
+	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
+
+	switchParity(A);
+	switchParity(B);
+
+	while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[B.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+	{
+		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		{
+			motor[A.strummingMotor] = 0;
+		}
+		if (abs(nMotorEncoder[B.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		{
+			motor[B.strummingMotor] = 0;
+		}
+	}
+}
+//mute then unmute should be called BEFORE strumming
+void unumute(Line&A, Line&B)
+(
+	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
+	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
+	switchParity(A);
+	switchParity(B);
+	while (abs(nMotorEncoder[A.strummingMotor]) > 0 || abs(nMotorEncoder[B.strummingMotor]) > 0)
+	{
+		if (abs(nMotorEncoder[A.strummingMotor]) <= 0)
+		{
+			motor[A.strummingMotor] = 0;
+		}
+		if (abs(nMotorEncoder[B.strummingMotor]) <= 0)
+		{
+			motor[B.strummingMotor] = 0;
+		}
+	}
+}
+
+
 void muted_reset(Line&A, Line&B)
 {
-	const int ANGLE_OF_MUTE_ROTATION = 20;
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
 
@@ -88,5 +131,20 @@ void muted_reset(Line&A, Line&B)
 			motor[B.strummingMotor] = 0;
 		}
 	}
-
+	wait1Msec(300);
+	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
+	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
+	switchParity(A);
+	switchParity(B);
+	while (abs(nMotorEncoder[A.strummingMotor]) > 0 || abs(nMotorEncoder[B.strummingMotor]) > 0)
+	{
+		if (abs(nMotorEncoder[A.strummingMotor]) <= 0)
+		{
+			motor[A.strummingMotor] = 0;
+		}
+		if (abs(nMotorEncoder[B.strummingMotor]) <= 0)
+		{
+			motor[B.strummingMotor] = 0;
+		}
+	}
 }
