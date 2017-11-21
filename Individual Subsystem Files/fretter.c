@@ -1,5 +1,5 @@
 float const WHEEL_RADIUS = 1.2;
-float const PULLEY_POWER = 80;
+float const PULLEY_POWER = 100;
 
 //get actual measurement
 
@@ -39,13 +39,17 @@ void zero(Line & A, Line & B)
 	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
-	while(nMotorEncoder[A.pulleyMotor]<(1.74498/WHEEL_RADIUS*360) && nMotorEncoder[B.pulleyMotor]<(1.74498/WHEEL_RADIUS*360))
+
+	// Move a cm bac to 0 pos
+	while(abs(nMotorEncoder[A.pulleyMotor])<(360/(2 * PI * WHEEL_RADIUS)) || abs(nMotorEncoder[B.pulleyMotor])<(360/(2*PI*WHEEL_RADIUS)))
 	{
-		if(nMotorEncoder[A.pulleyMotor] == (1.74498/WHEEL_RADIUS*360))
+		if(abs(nMotorEncoder[A.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
 			motor[A.pulleyMotor] = 0;
-		if(nMotorEncoder[B.pulleyMotor] == (1.74498/WHEEL_RADIUS*360))
+		if(abs(nMotorEncoder[B.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
 			motor[B.pulleyMotor] = 0;
 	}
+
+	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
 }
 
 int conversion(char note)
@@ -78,6 +82,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 void moveFrets(Line & A, Line & B)
 {
 	time1[T1] = 0;
+	mute(A,B);
 	float dist_A = 0, dist_B = 0;
 	noteDist(A, B, dist_A, dist_B);
 	displayBigTextLine(0, "%.2f     %.2f", dist_A, dist_B);
@@ -101,6 +106,7 @@ void moveFrets(Line & A, Line & B)
 	}
 	displayString(6, "heyyyyy");
 	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
+	unmute(A,B);
 	while (time1[T1] <= STRUM_TIME)
 	{}
 }
