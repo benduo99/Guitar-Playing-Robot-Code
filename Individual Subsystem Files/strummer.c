@@ -31,6 +31,8 @@ void strum(Line & A, Line & B)
 
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
+
+	wait1Msec(500);
 }
 
 void muted_reset(Line&A, Line&B)

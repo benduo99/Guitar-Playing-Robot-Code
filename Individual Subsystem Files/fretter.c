@@ -1,5 +1,5 @@
 float const WHEEL_RADIUS = 1.2;
-float const PULLEY_POWER = 80;
+float const PULLEY_POWER = 100;
 
 //get actual measurement
 
@@ -41,7 +41,7 @@ void zero(Line & A, Line & B)
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
 
 	// Move a cm bac to 0 pos
-	while(abs(nMotorEncoder[A.pulleyMotor]<(360/(2 * PI * WHEEL_RADIUS))) || abs(nMotorEncoder[B.pulleyMotor]<(360/(2*PI*WHEEL_RADIUS)))
+	while(abs(nMotorEncoder[A.pulleyMotor])<(360/(2 * PI * WHEEL_RADIUS)) || abs(nMotorEncoder[B.pulleyMotor])<(360/(2*PI*WHEEL_RADIUS)))
 	{
 		if(abs(nMotorEncoder[A.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
 			motor[A.pulleyMotor] = 0;

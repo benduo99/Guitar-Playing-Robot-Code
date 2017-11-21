@@ -18,15 +18,16 @@ typedef struct
 
 task main()
 {
+	const int LONG_TAB = 100;
+	TFileHandle fin_A;
+	TFileHandle fin_B;
+	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
 	bool fileOkayB = openReadPC(fin_B, "Play_me_B.txt");
 	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
-	const int LONG_TAB = 100;
-	//open file and read  (file is in a string)
-	TFileHandle fin_A;
-	TFileHandle fin_B;
-	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
+
+		//open file and read  (file is in a string)
 		displayString(1, "I'm not going to let you go on");
 		displayString(2, "Force terminate me plz");
 		while(true)
@@ -67,7 +68,7 @@ task main()
 	displayString(1,"%s",Song_2.song_name);
 
 	int current = 0;
-	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|' && current < LONG_TAB)
+	while (current < LONG_TAB && NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
 		moveFrets(A,B);
@@ -76,8 +77,6 @@ task main()
 
 		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
 		displayBigTextLine(6,"%c %d",NoteSeqB[current]);
-
-		wait1Msec(100);
 
 		current++;
 	}
