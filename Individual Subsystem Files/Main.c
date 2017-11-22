@@ -58,6 +58,7 @@ task main()
 
 	initializeLine(A, motorC, S1, motorA);
 	initializeLine(B, motorD, S2, motorB);
+	activatePID(A, B);
 
 	zero(A,B);
 

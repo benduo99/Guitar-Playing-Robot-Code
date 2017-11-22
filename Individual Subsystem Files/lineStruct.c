@@ -40,3 +40,11 @@ void switchParity (Line & object)
 {
 	object.parity *= -1;
 }
+
+void activatePID(Line & A, Line & B)
+{
+	nMotorPIDSpeedCtrl[A.strummingMotor] = mtrSpeedReg;
+	nMotorPIDSpeedCtrl[A.pulleyMotor] = mtrSpeedReg;
+	nMotorPIDSpeedCtrl[B.strummingMotor] = mtrSpeedReg;
+	nMotorPIDSpeedCtrl[B.pulleyMotor] = mtrSpeedReg;
+}
