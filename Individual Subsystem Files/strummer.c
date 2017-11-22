@@ -1,3 +1,5 @@
+const float TOL = 2;
+
 void strum(Line & A, Line & B)
 {
 	bool aIsRunning = false;
@@ -15,7 +17,7 @@ void strum(Line & A, Line & B)
 		switchParity(B);
 		bIsRunning = true;
 	}
-	while((aIsRunning && abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || bIsRunning && abs(nMotorEncoder[B.strummingMotor]) < DEGREE_OF_ROTATION)
+	while((aIsRunning && abs(nMotorEncoder[A.strummingMotor]) < DEGREE_OF_ROTATION) || (bIsRunning && abs(nMotorEncoder[B.strummingMotor]) < DEGREE_OF_ROTATION))
 	{
 		if(abs(nMotorEncoder[A.strummingMotor]) >= DEGREE_OF_ROTATION)
 		{
@@ -39,19 +41,19 @@ void mute(Line&A, Line&B)
 {
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
-	if (A.currentNote == '-')
+	if (A.currentNote != '-')
 	{
 		motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
 		switchParity(A);
 	}
-	if (B.currentNote == '-')
+	if (B.currentNote != '-')
 	{
 		motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
 		switchParity(B);
 	}
 
 
-	while (A.currentNote == '-' && abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || B.currentNote == '-' && abs(nMotorEncoder[B.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
+	while ((A.currentNote != '-' && abs(nMotorEncoder[A.strummingMotor]) < ANGLE_OF_MUTE_ROTATION) || (B.currentNote != '-' && abs(nMotorEncoder[B.strummingMotor]) < ANGLE_OF_MUTE_ROTATION))
 	{
 		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
 		{
@@ -62,35 +64,42 @@ void mute(Line&A, Line&B)
 			motor[B.strummingMotor] = 0;
 		}
 	}
-
-
+	motor[A.strummingMotor] = 0;
+	motor[B.strummingMotor] = 0;
 }
 //mute then unmute should be called BEFORE strumming
 void unmute(Line&A, Line&B)
 {
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(B.strummingMotor);
 
-	if (A.currentNote == '-')
+	if (A.currentNote != '-')
 	{
 		motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
 		switchParity(A);
 	}
-	if (B.currentNote == '-')
+	if (B.currentNote != '-')
 	{
 		motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
 		switchParity(B);
 	}
 
-	while (A.currentNote == '-' && abs(nMotorEncoder[A.strummingMotor]) > 0 ||B.currentNote == '-' && abs(nMotorEncoder[B.strummingMotor]) > 0)
+	while ((A.currentNote != '-' && abs(nMotorEncoder[A.strummingMotor]) < ANGLE_OF_MUTE_ROTATION) || (B.currentNote != '-' && abs(nMotorEncoder[B.strummingMotor]) < ANGLE_OF_MUTE_ROTATION))
 	{
-		if (abs(nMotorEncoder[A.strummingMotor]) <= 0)
+		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
 		{
 			motor[A.strummingMotor] = 0;
 		}
-		if (abs(nMotorEncoder[B.strummingMotor]) <= 0)
+		if (abs(nMotorEncoder[B.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
 		{
 			motor[B.strummingMotor] = 0;
 		}
 	}
+	motor[A.strummingMotor] = 0;
+	motor[B.strummingMotor] = 0;
+
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(B.strummingMotor);
 }
 
 
@@ -98,6 +107,7 @@ void muted_reset(Line&A, Line&B)
 {
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
+	updateCurrentNote(A,B,'|','|');
 
 	bool aIsRight = false;
 	bool bIsRight = false;
@@ -125,41 +135,9 @@ void muted_reset(Line&A, Line&B)
 			motor[B.strummingMotor] = 0;
 		}
 	}
-
-	resetMotorEncoder(A.strummingMotor);
-	resetMotorEncoder(B.strummingMotor);
-
-	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
-	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
-
-	switchParity(A);
-	switchParity(B);
-
-	while (abs(nMotorEncoder[A.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION || abs(nMotorEncoder[B.strummingMotor]) <= ANGLE_OF_MUTE_ROTATION)
-	{
-		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
-		{
-			motor[A.strummingMotor] = 0;
-		}
-		if (abs(nMotorEncoder[B.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
-		{
-			motor[B.strummingMotor] = 0;
-		}
-	}
+	motor[A.strummingMotor] = 0;
+	motor[B.strummingMotor] = 0;
+	mute(A,B);
 	wait1Msec(300);
-	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
-	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
-	switchParity(A);
-	switchParity(B);
-	while (abs(nMotorEncoder[A.strummingMotor]) > 0 || abs(nMotorEncoder[B.strummingMotor]) > 0)
-	{
-		if (abs(nMotorEncoder[A.strummingMotor]) <= 0)
-		{
-			motor[A.strummingMotor] = 0;
-		}
-		if (abs(nMotorEncoder[B.strummingMotor]) <= 0)
-		{
-			motor[B.strummingMotor] = 0;
-		}
-	}
+	unmute(A,B);
 }

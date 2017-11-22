@@ -17,13 +17,13 @@ void updateCurrentNote(Line & object_A, Line & object_B, char note_A, char note_
 	object_B.currentNote = note_B;
 }
 
-void updateCurentPosition(Line & object_A, Line & object_B)
+void updateCurrentPosition(Line & object_A, Line & object_B)
 {
 	if(object_A.currentNote != '-')
 		object_A.currentPosition = object_A.currentNote;
 
 	if(object_B.currentNote != '-')
-		object_B.currentPosition = object_B.currentNote
+		object_B.currentPosition = object_B.currentNote;
 }
 
 void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMotor strummingMotor)
@@ -40,4 +40,3 @@ void switchParity (Line & object)
 {
 	object.parity *= -1;
 }
-
