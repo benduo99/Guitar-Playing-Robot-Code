@@ -1,6 +1,7 @@
 const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
-const int STRUM_TIME = 500;
+const int ANGLE_OF_MUTE_ROTATION = 20;
+const int STRUM_TIME = 0;
 const float DISTANCE[12] = {0, 3.644, 6.922, 9.844, 12.535, 15.363, 17.760, 20.546, 22.693, 24.640, 25.714, 28.651};
 
 
@@ -19,7 +20,6 @@ typedef struct
 task main()
 {
 	const int LONG_TAB = 100;
-	//open file and read  (file is in a string)
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
@@ -27,6 +27,8 @@ task main()
 	if(!fileOkayA || !fileOkayB)
 	{
 		displayString(0, "Failed to Open File");
+
+		//open file and read  (file is in a string)
 		displayString(1, "I'm not going to let you go on");
 		displayString(2, "Force terminate me plz");
 		while(true)
@@ -54,8 +56,10 @@ task main()
 		readCharPC(fin_B, NoteSeqB[seqIndex]);
 	}
 
-	initializeLine(A, motorC, 1, motorA);
-	initializeLine(B, motorD, 2, motorB);
+	initializeLine(A, motorC, S1, motorA);
+	initializeLine(B, motorD, S2, motorB);
+
+	zero(A,B);
 
 	while(!getButtonPress(buttonAny))
 	{}
@@ -67,20 +71,22 @@ task main()
 	displayString(1,"%s",Song_2.song_name);
 
 	int current = 0;
-	while (NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
+
+	while (current < LONG_TAB && NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
 	//the end of the file is going to return null which is false as a character
 	{
+		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		updateNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		strum (A,B);
+		updateCurrentPosition(A,B);
 
 		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
 		displayBigTextLine(6,"%c %d",NoteSeqB[current]);
 
-		wait1Msec(100);
-
 		current++;
 	}
+
+
 	displayString(0, "That is the end of the song:");
 	displayString(2, "Feel free to terminate me now", Song_2.song_name);
 
