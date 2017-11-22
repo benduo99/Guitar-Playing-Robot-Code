@@ -6,21 +6,21 @@ task main()
 	{
 		if(getButtonPress(buttonEnter))
 		{
-			resetMotorEncoder(motorD);
+			resetMotorEncoder(motorC);
 		}
 
 		while(getButtonPress(buttonRight))
 		{
-			motor[motorD] = -10;
+			motor[motorC] = -10;
 		}
-		motor[motorD] = 0;
+		motor[motorC] = 0;
 		while(getButtonPress(buttonLeft))
 		{
-			motor[motorD] = 10;
+			motor[motorC] = 10;
 		}
-		motor[motorD] = 0;
+		motor[motorC] = 0;
 
-		distance = nMotorEncoder[motorD] * (2 * PI * WHEEL_RADIUS)/360;
+		distance = nMotorEncoder[motorC] * (2 * PI * WHEEL_RADIUS)/360;
 		displayBigTextLine(3, "%f", distance);
 	}
 }
