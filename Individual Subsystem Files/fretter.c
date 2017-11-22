@@ -26,6 +26,7 @@ void waitForButtonPress1()
 void zero(Line & A, Line & B)
 {
 	//test for motor direction and motor slot
+
 	motor[A.pulleyMotor]=motor[B.pulleyMotor]=20;
 	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0)
 	{
@@ -34,11 +35,11 @@ void zero(Line & A, Line & B)
 
 		if(SensorValue[B.touchPort] == 1)
 			motor[B.pulleyMotor] = 0;
+
 	}
-
-	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
-
-/*	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
+	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
+/*	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
+	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
 
 	// Move a cm bac to 0 pos
 	while(abs(nMotorEncoder[A.pulleyMotor])<(360/(2 * PI * WHEEL_RADIUS)) || abs(nMotorEncoder[B.pulleyMotor])<(360/(2*PI*WHEEL_RADIUS)))
