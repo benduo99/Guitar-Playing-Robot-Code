@@ -36,7 +36,35 @@ void strum(Line & A, Line & B)
 
 	wait1Msec(500);
 }
+//called RIGHT after zero function
+void initial_unmute (Line & A, Line & B)
+{
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(B.strummingMotor);
+	
+	motor[A.strummingMotor] = A.parity*MOTOR_TEMPO;
+	switchParity(A);
+	
+	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
+	switchParity(B);
 
+	while ((abs(nMotorEncoder[A.strummingMotor]) < ANGLE_OF_MUTE_ROTATION) || (abs(nMotorEncoder[B.strummingMotor]) < ANGLE_OF_MUTE_ROTATION))
+	{
+		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		{
+			motor[A.strummingMotor] = 0;
+		}
+		if (abs(nMotorEncoder[B.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		{
+			motor[B.strummingMotor] = 0;
+		}
+	}
+	motor[A.strummingMotor] = 0;
+	motor[B.strummingMotor] = 0;
+
+	resetMotorEncoder(A.strummingMotor);
+	resetMotorEncoder(B.strummingMotor);
+}
 void mute(Line&A, Line&B)
 {
 	resetMotorEncoder(A.strummingMotor);
@@ -138,6 +166,4 @@ void muted_reset(Line&A, Line&B)
 	motor[A.strummingMotor] = 0;
 	motor[B.strummingMotor] = 0;
 	mute(A,B);
-	wait1Msec(300);
-	unmute(A,B);
 }
