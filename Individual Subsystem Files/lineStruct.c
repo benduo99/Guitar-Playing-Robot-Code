@@ -33,7 +33,7 @@ void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMot
 	object.currentNote = '-';
 	object.currentPosition = 'A';
 	object.strummingMotor = strummingMotor;
-	object.parity = 1;
+	object.parity = -1;
 }
 
 void switchParity (Line & object)

@@ -125,9 +125,15 @@ void unmute(Line&A, Line&B)
 	}
 	motor[A.strummingMotor] = 0;
 	motor[B.strummingMotor] = 0;
+	
+	if(A.currentNote != '-' || B.currentNote != '-')
+	{
+		wait1Msec(200);
+	}
 
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
+
 }
 
 
