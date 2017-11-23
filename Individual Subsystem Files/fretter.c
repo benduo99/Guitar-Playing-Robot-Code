@@ -31,6 +31,7 @@ void zero(Line & A, Line & B)
 	motor[A.strummingMotor] = A.parity * 20;
 	motor[B.strummingMotor] = B.parity * 20; 
 	time1[T2] = 0;
+	// The time delay has to be determined experimentally. NOT DONE YET. 
 	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 || time1[T2] < 2000)
 	{
 		if(SensorValue[A.touchPort] == 1)
@@ -38,6 +39,7 @@ void zero(Line & A, Line & B)
 
 		if(SensorValue[B.touchPort] == 1)
 			motor[B.pulleyMotor] = 0;
+		
 		if(time1[T2] >= 2000)
 			motor[A.strummingMotor] = motor[B.strummingMotor]  = 0;
 
@@ -92,15 +94,13 @@ void moveFrets(Line & A, Line & B)
 
 	while(abs(nMotorEncoder[A.pulleyMotor]) < fabs(dist_A) || abs(nMotorEncoder[B.pulleyMotor]) < fabs(dist_B))
 	{
-
-		// waitForButtonPress1();
 		if(abs(nMotorEncoder[A.pulleyMotor]) >= fabs(dist_A))
 			motor[A.pulleyMotor] = 0;
 
 		if(abs(nMotorEncoder[B.pulleyMotor]) >= fabs(dist_B))
 			motor[B.pulleyMotor] = 0;
 	}
-	displayString(6, "heyyyyy");
+	
 	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
 	unmute(A,B);
 	while (time1[T1] <= STRUM_TIME)
