@@ -27,30 +27,25 @@ void zero(Line & A, Line & B)
 {
 	//test for motor direction and motor slot
 
-	motor[A.pulleyMotor]=motor[B.pulleyMotor]=20;
-	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0)
+	motor[A.pulleyMotor]=motor[B.pulleyMotor] = 20;
+	motor[A.strummingMotor] = A.parity * 20;
+	motor[B.strummingMotor] = B.parity * 20; 
+	time1[T2] = 0;
+	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 || time1[T2] < 2000)
 	{
 		if(SensorValue[A.touchPort] == 1)
 			motor[A.pulleyMotor] = 0;
 
 		if(SensorValue[B.touchPort] == 1)
 			motor[B.pulleyMotor] = 0;
+		if(time1[T2] >= 2000)
+			motor[A.strummingMotor] = motor[B.strummingMotor]  = 0;
 
 	}
 	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
-/*	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
-	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
 
-	// Move a cm bac to 0 pos
-	while(abs(nMotorEncoder[A.pulleyMotor])<(360/(2 * PI * WHEEL_RADIUS)) || abs(nMotorEncoder[B.pulleyMotor])<(360/(2*PI*WHEEL_RADIUS)))
-	{
-		if(abs(nMotorEncoder[A.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
-			motor[A.pulleyMotor] = 0;
-		if(abs(nMotorEncoder[B.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
-			motor[B.pulleyMotor] = 0;
-	}
-
-	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;*/
+	switchParity(A);
+	switchParity(B);
 }
 
 int conversion(char note)
