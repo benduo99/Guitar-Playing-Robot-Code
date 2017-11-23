@@ -33,10 +33,18 @@ void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMot
 	object.currentNote = '-';
 	object.currentPosition = 'A';
 	object.strummingMotor = strummingMotor;
-	object.parity = 1;
+	object.parity = -1;
 }
 
 void switchParity (Line & object)
 {
 	object.parity *= -1;
+}
+
+void activatePID(Line & A, Line & B)
+{
+	nMotorPIDSpeedCtrl[A.strummingMotor] = mtrSpeedReg;
+	nMotorPIDSpeedCtrl[A.pulleyMotor] = mtrSpeedReg;
+	nMotorPIDSpeedCtrl[B.strummingMotor] = mtrSpeedReg;
+	nMotorPIDSpeedCtrl[B.pulleyMotor] = mtrSpeedReg;
 }
