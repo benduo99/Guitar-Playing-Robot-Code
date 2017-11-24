@@ -58,8 +58,8 @@ task main()
 	//activatePID(A, B);
 	zero(A,B);
 //	initial_unmute(A,B); because not needed anymore due to hard stops
-	while(!getButtonPress(buttonAny))
-	{}
+	//while(!getButtonPress(buttonAny)) ANNOYING TO GET UP TO PRESS BUTTON
+	//{}
 	while(getButtonPress(buttonAny))
 	{}
 
@@ -74,8 +74,7 @@ task main()
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		//strum (A,B);
-		waitForButtonPress1();
+		strum (A,B);
 
 		updateCurrentPosition(A,B);
 

@@ -1,5 +1,5 @@
 const float TOL = 2;
-
+const int STRUM_WAIT_TIME = 100;
 int setAngleToMuteA(Line const & A)
 {
 	if(A.parity == -1)
@@ -46,7 +46,7 @@ void strum(Line & A, Line & B)
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
 
-	wait1Msec(500);
+	wait1Msec(STRUM_WAIT_TIME);
 }
 //called RIGHT after zero function
 void initial_unmute (Line & A, Line & B)
