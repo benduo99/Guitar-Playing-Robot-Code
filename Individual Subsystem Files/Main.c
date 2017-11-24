@@ -74,7 +74,7 @@ task main()
 	//the end of the file is going to return null which is false as a character
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
-		moveFrets(A,B);
+		moveFrets(A,B);	
 		strum (A,B);
 		updateCurrentPosition(A,B);
 
