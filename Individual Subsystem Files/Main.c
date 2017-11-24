@@ -58,7 +58,7 @@ task main()
 	initializeLine(B, motorD, S2, motorB);
 	//activatePID(A, B);
 	zero(A,B);
-	initial_unmute(A,B);
+//	initial_unmute(A,B); because not needed anymore due to hard stops
 	while(!getButtonPress(buttonAny))
 	{}
 	while(getButtonPress(buttonAny))
@@ -74,7 +74,7 @@ task main()
 	//the end of the file is going to return null which is false as a character
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
-		moveFrets(A,B);	
+		moveFrets(A,B);
 		strum (A,B);
 		updateCurrentPosition(A,B);
 

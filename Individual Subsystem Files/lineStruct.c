@@ -55,9 +55,9 @@ void zero(Line & A, Line & B)
 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor] = 20;
 	motor[A.strummingMotor] = A.parity * 20;
-	motor[B.strummingMotor] = B.parity * 20; 
+	motor[B.strummingMotor] = B.parity * 20;
 	time1[T2] = 0;
-	// The time delay has to be determined experimentally. NOT DONE YET. 
+	// The time delay has to be determined experimentally. NOT DONE YET.
 	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 || time1[T2] < 2000)
 	{
 		if(SensorValue[A.touchPort] == 1)
@@ -65,8 +65,8 @@ void zero(Line & A, Line & B)
 
 		if(SensorValue[B.touchPort] == 1)
 			motor[B.pulleyMotor] = 0;
-		
-		if(time1[T2] >= 2000)
+
+		if(time1[T2] >= 1000)
 			motor[A.strummingMotor] = motor[B.strummingMotor]  = 0;
 
 	}
