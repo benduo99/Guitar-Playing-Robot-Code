@@ -2,7 +2,6 @@ const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
 const int ANGLE_OF_MUTE_ROTATION = 20;
 const int STRUM_TIME = 0;
-const float DISTANCE[12] = {0, 3.644, 6.922, 9.844, 12.535, 15.363, 17.760, 20.546, 22.693, 24.640, 25.714, 28.651};
 
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
@@ -75,7 +74,9 @@ task main()
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		strum (A,B);
+		//strum (A,B);
+		waitForButtonPress1();
+
 		updateCurrentPosition(A,B);
 
 		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
