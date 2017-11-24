@@ -4,7 +4,7 @@ int setAngleToMuteA(Line const & A)
 {
 	if(A.parity == -1)
 	{
-		return 36;
+		return 34;//outside mute
 	}
 
 	return 40;
@@ -14,7 +14,7 @@ int setAngleToMuteB(Line const & B)
 {
 	if(B.parity == -1)
 	{
-		return 38;
+		return 36;//outside mute
 	}
 
 	return 42;

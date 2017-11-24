@@ -58,8 +58,8 @@ task main()
 	//activatePID(A, B);
 	zero(A,B);
 //	initial_unmute(A,B); because not needed anymore due to hard stops
-	//while(!getButtonPress(buttonAny)) ANNOYING TO GET UP TO PRESS BUTTON
-	//{}
+	while(!getButtonPress(buttonAny))// ANNOYING TO GET UP TO PRESS BUTTON
+	{}
 	while(getButtonPress(buttonAny))
 	{}
 
