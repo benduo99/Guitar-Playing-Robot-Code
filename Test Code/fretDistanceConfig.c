@@ -4,6 +4,13 @@ task main()
 	float distance = 0;
 	while(true)
 	{
+		if(getButtonPress(buttonDown))
+		{
+			motor[motorC] = 20;
+			while(SensorValue[S1] == 0)
+			{}
+			motor[motorC] = 0;
+		}
 		if(getButtonPress(buttonEnter))
 		{
 			resetMotorEncoder(motorC);
