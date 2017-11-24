@@ -76,7 +76,9 @@ task main()
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		strum (A,B);
+		//strum (A,B);
+		waitForButtonPress1();
+
 		updateCurrentPosition(A,B);
 
 		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
