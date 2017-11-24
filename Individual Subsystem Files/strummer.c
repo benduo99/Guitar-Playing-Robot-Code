@@ -59,6 +59,8 @@ void strum(Line & A, Line & B)
 //called RIGHT after zero function
 void initial_unmute (Line & A, Line & B)
 {
+	int angleToMoveA = setAngleToMuteA(A);
+	int angleToMoveB = setAngleToMuteB(B);
 	resetMotorEncoder(A.strummingMotor);
 	resetMotorEncoder(B.strummingMotor);
 	
@@ -68,13 +70,13 @@ void initial_unmute (Line & A, Line & B)
 	motor[B.strummingMotor] = B.parity*MOTOR_TEMPO;
 	switchParity(B);
 
-	while ((abs(nMotorEncoder[A.strummingMotor]) < ANGLE_OF_MUTE_ROTATION) || (abs(nMotorEncoder[B.strummingMotor]) < ANGLE_OF_MUTE_ROTATION))
+	while ((abs(nMotorEncoder[A.strummingMotor]) < angleToMoveA) || (abs(nMotorEncoder[B.strummingMotor]) < angleToMoveB))
 	{
-		if (abs(nMotorEncoder[A.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		if (abs(nMotorEncoder[A.strummingMotor]) >= angleToMoveA)
 		{
 			motor[A.strummingMotor] = 0;
 		}
-		if (abs(nMotorEncoder[B.strummingMotor]) >= ANGLE_OF_MUTE_ROTATION)
+		if (abs(nMotorEncoder[B.strummingMotor]) >= angleToMoveB)
 		{
 			motor[B.strummingMotor] = 0;
 		}
