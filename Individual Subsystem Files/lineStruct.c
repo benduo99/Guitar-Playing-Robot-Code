@@ -33,10 +33,37 @@ void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMot
 	object.currentNote = '-';
 	object.currentPosition = 'A';
 	object.strummingMotor = strummingMotor;
-	object.parity = 1;
+	object.parity = -1;
 }
 
 void switchParity (Line & object)
 {
 	object.parity *= -1;
+}
+
+void zero(Line & A, Line & B)
+{
+	//test for motor direction and motor slot
+
+	motor[A.pulleyMotor]=motor[B.pulleyMotor] = 20;
+	motor[A.strummingMotor] = A.parity * 20;
+	motor[B.strummingMotor] = B.parity * 20;
+	time1[T2] = 0;
+	// The time delay has to be determined experimentally. NOT DONE YET.
+	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 || time1[T2] < 2000)
+	{
+		if(SensorValue[A.touchPort] == 1)
+			motor[A.pulleyMotor] = 0;
+
+		if(SensorValue[B.touchPort] == 1)
+			motor[B.pulleyMotor] = 0;
+
+		if(time1[T2] >= 1000)
+			motor[A.strummingMotor] = motor[B.strummingMotor]  = 0;
+
+	}
+	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
+
+	switchParity(A);
+	switchParity(B);
 }

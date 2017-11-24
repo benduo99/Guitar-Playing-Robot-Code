@@ -25,36 +25,6 @@ void waitForButtonPress1()
 	{}
 }
 
-void zero(Line & A, Line & B)
-{
-	//test for motor direction and motor slot
-
-	motor[A.pulleyMotor]=motor[B.pulleyMotor]=20;
-	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0)
-	{
-		if(SensorValue[A.touchPort] == 1)
-			motor[A.pulleyMotor] = 0;
-
-		if(SensorValue[B.touchPort] == 1)
-			motor[B.pulleyMotor] = 0;
-
-	}
-	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
-/*	nMotorEncoder[A.pulleyMotor] = nMotorEncoder[B.pulleyMotor] = 0;
-	motor[A.pulleyMotor]=motor[B.pulleyMotor]=-20;
-
-	// Move a cm bac to 0 pos
-	while(abs(nMotorEncoder[A.pulleyMotor])<(360/(2 * PI * WHEEL_RADIUS)) || abs(nMotorEncoder[B.pulleyMotor])<(360/(2*PI*WHEEL_RADIUS)))
-	{
-		if(abs(nMotorEncoder[A.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
-			motor[A.pulleyMotor] = 0;
-		if(abs(nMotorEncoder[B.pulleyMotor]) >= (1.74498/(2 *  PI * WHEEL_RADIUS)*360))
-			motor[B.pulleyMotor] = 0;
-	}
-
-	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;*/
-}
-
 int conversion(char note)
 {
 	return (int)note - 65;
@@ -85,7 +55,7 @@ void noteDist(Line & A, Line & B, float & dist_A, float & dist_B)
 void moveFrets(Line & A, Line & B)
 {
 	time1[T1] = 0;
-	mute(A,B);
+	toggleMute(A,B);
 	float dist_A = 0, dist_B = 0;
 	noteDist(A, B, dist_A, dist_B);
 	displayBigTextLine(0, "%.2f     %.2f", dist_A, dist_B);
@@ -99,17 +69,15 @@ void moveFrets(Line & A, Line & B)
 
 	while(abs(nMotorEncoder[A.pulleyMotor]) < fabs(dist_A) || abs(nMotorEncoder[B.pulleyMotor]) < fabs(dist_B))
 	{
-
-		// waitForButtonPress1();
 		if(abs(nMotorEncoder[A.pulleyMotor]) >= fabs(dist_A))
 			motor[A.pulleyMotor] = 0;
 
 		if(abs(nMotorEncoder[B.pulleyMotor]) >= fabs(dist_B))
 			motor[B.pulleyMotor] = 0;
 	}
-	displayString(6, "heyyyyy");
+
 	motor[A.pulleyMotor] = motor[B.pulleyMotor] = 0;
-	unmute(A,B);
+	toggleMute(A,B);
 	while (time1[T1] <= STRUM_TIME)
 	{}
 }

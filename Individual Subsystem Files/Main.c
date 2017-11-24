@@ -3,7 +3,6 @@ const int DEGREE_OF_ROTATION = 45;
 const int ANGLE_OF_MUTE_ROTATION = 20;
 const int STRUM_TIME = 0;
 
-
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
 #include "strummer.c"
@@ -50,18 +49,17 @@ task main()
 
 	for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
 	{
-		// IF THIS BREAKS, NIEL COMBINED TWO FOR LOOPS INTO ONE.
 		readCharPC(fin_A, NoteSeqA[seqIndex]);
 		readCharPC(fin_B, NoteSeqB[seqIndex]);
 	}
 
 	initializeLine(A, motorC, S1, motorA);
 	initializeLine(B, motorD, S2, motorB);
-
+	//activatePID(A, B);
 	zero(A,B);
-
-	while(!getButtonPress(buttonAny))
-	{}
+//	initial_unmute(A,B); because not needed anymore due to hard stops
+	//while(!getButtonPress(buttonAny)) ANNOYING TO GET UP TO PRESS BUTTON
+	//{}
 	while(getButtonPress(buttonAny))
 	{}
 
@@ -76,8 +74,7 @@ task main()
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		//strum (A,B);
-		waitForButtonPress1();
+		strum (A,B);
 
 		updateCurrentPosition(A,B);
 

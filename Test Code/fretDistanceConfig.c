@@ -29,5 +29,6 @@ task main()
 
 		distance = nMotorEncoder[motorC] * (2 * PI * WHEEL_RADIUS)/360;
 		displayBigTextLine(3, "%f", distance);
+		displayBigTextLine(5, "%d", nMotorEncoder[motorC]);
 	}
 }
