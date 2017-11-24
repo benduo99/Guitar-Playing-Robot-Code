@@ -59,12 +59,12 @@ task main()
 	initializeLine(B, motorD, S2, motorB);
 
 	zero(A,B);
-
+/*
 	while(!getButtonPress(buttonAny))
 	{}
 	while(getButtonPress(buttonAny))
 	{}
-
+*/
 	eraseDisplay();
 	displayString(0, "Now Playing:");
 	displayString(1,"%s",Song_2.song_name);
@@ -76,9 +76,7 @@ task main()
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
-		//strum (A,B);
-		waitForButtonPress1();
-
+		strum (A,B);
 		updateCurrentPosition(A,B);
 
 		displayBigTextLine(3,"%c %d",NoteSeqA[current]);

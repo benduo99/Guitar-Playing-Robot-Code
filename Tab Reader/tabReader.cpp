@@ -206,7 +206,7 @@ char encodeNums(int value)
 	else if (value>12&&value<=24)
 		note = (char)value +52;
 	else if (value == 0)
-		note = 'M';		
+		note = 'L';		
 	else
 		note = '-';
 	return note;	
