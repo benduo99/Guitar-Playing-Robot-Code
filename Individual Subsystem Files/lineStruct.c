@@ -44,10 +44,11 @@ void switchParity (Line & object)
 void zero(Line & A, Line & B)
 {
 	//test for motor direction and motor slot
-
-	motor[A.pulleyMotor]=motor[B.pulleyMotor] = 20;
-	motor[A.strummingMotor] = A.parity * 20;
-	motor[B.strummingMotor] = B.parity * 20;
+	
+	const int MUTE_POWER = 20;
+	motor[A.pulleyMotor]=motor[B.pulleyMotor] = MUTE_POWER;
+	motor[A.strummingMotor] = A.parity * MUTE_POWER;
+	motor[B.strummingMotor] = B.parity * MUTE_POWER;
 	time1[T2] = 0;
 	const int TIME_DELAY = 1000; 
 	// The time delay has to be determined experimentally. NOT DONE YET.
