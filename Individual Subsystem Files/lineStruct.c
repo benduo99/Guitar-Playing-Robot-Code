@@ -1,3 +1,4 @@
+// Niel Mistry
 typedef struct
 {
 	// Fretting Stuff
@@ -11,12 +12,14 @@ typedef struct
 	int parity;			// Left relative to motor while looking at it from behind
 } Line;
 
+// Niel Mistry
 void updateCurrentNote(Line & object_A, Line & object_B, char note_A, char note_B)
 {
 	object_A.currentNote = note_A;
 	object_B.currentNote = note_B;
 }
 
+// Niel Mistry
 void updateCurrentPosition(Line & object_A, Line & object_B)
 {
 	if(object_A.currentNote != '-')
@@ -26,6 +29,7 @@ void updateCurrentPosition(Line & object_A, Line & object_B)
 		object_B.currentPosition = object_B.currentNote;
 }
 
+// Niel Mistry
 void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMotor strummingMotor)
 {
 	object.pulleyMotor = pulleyMotor;
@@ -41,6 +45,7 @@ void switchParity (Line & object)
 	object.parity *= -1;
 }
 
+// Ben Duo
 void zero(Line & A, Line & B)
 {
 	//test for motor direction and motor slot
