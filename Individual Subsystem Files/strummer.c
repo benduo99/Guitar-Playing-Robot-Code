@@ -20,6 +20,8 @@ int setAngleToMuteB(Line const & B)
 	return 42;
 }
 
+// Niel Mistry
+
 void strum(Line & A, Line & B)
 {
 	const int STRUM_TIME = 100;
@@ -49,6 +51,7 @@ void strum(Line & A, Line & B)
 	wait1Msec(STRUM_WAIT_TIME);
 }
 //called RIGHT after zero function
+// From here below - Brendan Johnston
 void initial_unmute (Line & A, Line & B)
 {
 	int angleToMoveA = setAngleToMuteA(A);
