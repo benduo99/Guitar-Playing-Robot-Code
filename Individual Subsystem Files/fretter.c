@@ -7,7 +7,7 @@ const float DISTANCEA[12] = {0, 4.671, 7.864, 10.409, 13.352, 15.855, 18.525, 20
 
 //segment of code, using structs and parts from other pieces of code.
 
-//written by Ben Duo
+//entire file written by Ben Duo
 
 int direction(int a)
 {
