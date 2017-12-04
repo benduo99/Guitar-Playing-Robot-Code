@@ -6,7 +6,7 @@ using namespace std;
 
 const int MAX_SIZE = 10000;
 
-bool getTab(string &e, string &B, string &G, string &D,
+void getTab(string &e, string &B, string &G, string &D,
 		string &A, string &E, string (&tuning)[6], string fileName, ifstream & fin);
 
 void array_init(char e[],char B[], char G[], char D [], char A[],
@@ -83,10 +83,10 @@ int main() //program assumes tablature is written correctly
 	return EXIT_SUCCESS;
 }
 
-bool getTab(string &e, string &B, string &G, string &D,
+void getTab(string &e, string &B, string &G, string &D,
 		string &A, string &E, string (&tuning)[6],string fileName, ifstream & fin)
 	{
-	char note;
+	char note = 0;
 	int stringnum = 0;
 	int stringPitch =0;
 	
@@ -145,8 +145,7 @@ bool getTab(string &e, string &B, string &G, string &D,
 				stringnum = 0;
 			}				
 		}	
-	}
-	return true;				
+	}				
 }
 
 void array_init(char e[],char B[], char G[], char D [], char A[], char E[])
