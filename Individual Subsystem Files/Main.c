@@ -1,7 +1,3 @@
-const int DEGREE_OF_ROTATION = 45;
-const int ANGLE_OF_MUTE_ROTATION = 20;
-
-
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
 #include "strummer.c"

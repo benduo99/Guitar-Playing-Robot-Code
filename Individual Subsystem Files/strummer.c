@@ -1,5 +1,6 @@
 const int STRUM_POWER = 75;
 const int STRUM_WAIT_TIME = 100;
+const int DEGREE_OF_ROTATION = 45;
 
 int setAngleToMuteA(Line const & A)
 {
@@ -52,38 +53,6 @@ void strum(Line & A, Line & B)
 }
 
 // From here below - Written by Brendan Johnston
-void initial_unmute (Line & A, Line & B)
-{
-	int angleToMoveA = setAngleToMuteA(A);
-	int angleToMoveB = setAngleToMuteB(B);
-	resetMotorEncoder(A.strummingMotor);
-	resetMotorEncoder(B.strummingMotor);
-
-	motor[A.strummingMotor] = A.parity*STRUM_POWER;
-	switchParity(A);
-
-	motor[B.strummingMotor] = B.parity*STRUM_POWER;
-	switchParity(B);
-
-	while ((abs(nMotorEncoder[A.strummingMotor]) < angleToMoveA) || 
-		(abs(nMotorEncoder[B.strummingMotor]) < angleToMoveB))
-	{
-		if (abs(nMotorEncoder[A.strummingMotor]) >= angleToMoveA)
-		{
-			motor[A.strummingMotor] = 0;
-		}
-		if (abs(nMotorEncoder[B.strummingMotor]) >= angleToMoveB)
-		{
-			motor[B.strummingMotor] = 0;
-		}
-	}
-	motor[A.strummingMotor] = 0;
-	motor[B.strummingMotor] = 0;
-
-	resetMotorEncoder(A.strummingMotor);
-	resetMotorEncoder(B.strummingMotor);
-}
-
 void toggleMute(Line&A, Line&B)
 {
 	int angleToMoveA = 0;
