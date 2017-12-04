@@ -1,23 +1,16 @@
-const int MOTOR_TEMPO = 75;
 const int DEGREE_OF_ROTATION = 45;
 const int ANGLE_OF_MUTE_ROTATION = 20;
-const int STRUM_TIME = 0;
+
 
 #include "EV3_FileIO.c"
 #include "lineStruct.c"
 #include "strummer.c"
 #include "fretter.c"
 
-typedef struct
-{
-	//notes for string A
-	string song_name;
-	//asssume that can output number of notes including dashes to play
-}song_info;
-
+// Written by Brendan Johnston and Niel Mistry
 task main()
 {
-	const int LONG_TAB = 100;
+	const int LONG_TAB = 100; // Length of longest file possible
 	TFileHandle fin_A;
 	TFileHandle fin_B;
 	bool fileOkayA = openReadPC(fin_A, "Play_me_A.txt");
@@ -33,21 +26,20 @@ task main()
 		{}
 	}
 
-	// assume we recieved the string
-	song_info Song_2;
-	Song_2.song_name = "Complex a$$ song!!!";
-	//blur reference
+	string song_name = "Name";
+
 	Line A;
 	Line B;
 	char NoteSeqA[LONG_TAB];
 	char NoteSeqB[LONG_TAB];
-	for(int i = 0; i < LONG_TAB; i++)
+
+	for(int i = 0; i < LONG_TAB; i++) // initialize arrays
 	{
 		NoteSeqA[i] = 0;
 		NoteSeqB[i] = 0;
 	}
 
-	for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++)
+	for (int seqIndex = 0; seqIndex < LONG_TAB; seqIndex++) // read in values
 	{
 		readCharPC(fin_A, NoteSeqA[seqIndex]);
 		readCharPC(fin_B, NoteSeqB[seqIndex]);
@@ -55,22 +47,24 @@ task main()
 
 	initializeLine(A, motorC, S1, motorA);
 	initializeLine(B, motorD, S2, motorB);
-	//activatePID(A, B);
+
 	zero(A,B);
-//	initial_unmute(A,B); because not needed anymore due to hard stops
-	//while(!getButtonPress(buttonAny)) ANNOYING TO GET UP TO PRESS BUTTON
-	//{}
+
+	while(!getButtonPress(buttonAny))
+	{}
+
 	while(getButtonPress(buttonAny))
 	{}
 
 	eraseDisplay();
 	displayString(0, "Now Playing:");
-	displayString(1,"%s",Song_2.song_name);
+	displayString(1,"%s",song_name);
 
 	int current = 0;
 
-	while (current < LONG_TAB && NoteSeqA[current] != '|' && NoteSeqB[current] != '|')
-	//the end of the file is going to return null which is false as a character
+	while (current < LONG_TAB && NoteSeqA[current] != '|'  
+		&& NoteSeqB[current] != '|')
+		// keeps going through array until its hit max size or | character
 	{
 		updateCurrentNote(A, B, NoteSeqA[current], NoteSeqB[current]);
 		moveFrets(A,B);
@@ -78,15 +72,12 @@ task main()
 
 		updateCurrentPosition(A,B);
 
-		displayBigTextLine(3,"%c %d",NoteSeqA[current]);
-		displayBigTextLine(6,"%c %d",NoteSeqB[current]);
-
 		current++;
 	}
 
 
 	displayString(0, "That is the end of the song:");
-	displayString(2, "Feel free to terminate me now", Song_2.song_name);
+	displayString(2, "Feel free to terminate me now", song_name);
 
 	while(!getButtonPress(buttonAny))
 	{}

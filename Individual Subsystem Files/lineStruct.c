@@ -1,25 +1,24 @@
-// Niel Mistry
+// All functions in file except zero written by Niel Mistry
 typedef struct
 {
-	// Fretting Stuff
+	// Fretting Variables
 	tMotor pulleyMotor;
 	tSensors touchPort;
 	char currentNote;
 	char currentPosition;
 
-	// Strumming Stuff
+	// Strumming Variables
 	tMotor strummingMotor;
-	int parity;			// Left relative to motor while looking at it from behind
+	int parity;			// Sets direction of strumming motor
 } Line;
 
-// Niel Mistry
-void updateCurrentNote(Line & object_A, Line & object_B, char note_A, char note_B)
+void updateCurrentNote(Line & object_A, Line & object_B, char note_A, 
+	char note_B)
 {
 	object_A.currentNote = note_A;
 	object_B.currentNote = note_B;
 }
 
-// Niel Mistry
 void updateCurrentPosition(Line & object_A, Line & object_B)
 {
 	if(object_A.currentNote != '-')
@@ -29,8 +28,8 @@ void updateCurrentPosition(Line & object_A, Line & object_B)
 		object_B.currentPosition = object_B.currentNote;
 }
 
-// Niel Mistry
-void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, tMotor strummingMotor)
+void initializeLine (Line & object, tMotor pulleyMotor, tSensors touchPort, 
+	tMotor strummingMotor)
 {
 	object.pulleyMotor = pulleyMotor;
 	object.touchPort = touchPort;
@@ -45,19 +44,18 @@ void switchParity (Line & object)
 	object.parity *= -1;
 }
 
-// Ben Duo
+// Written by Ben Duo
 void zero(Line & A, Line & B)
 {
-	//test for motor direction and motor slot
-	
 	const int MOVE_POWER = 20;
 	motor[A.pulleyMotor]=motor[B.pulleyMotor] = MOVE_POWER;
 	motor[A.strummingMotor] = A.parity * MOVE_POWER;
 	motor[B.strummingMotor] = B.parity * MOVE_POWER;
 	time1[T2] = 0;
 	const int TIME_DELAY = 1000; 
-	// The time delay has to be determined experimentally. NOT DONE YET.
-	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 || time1[T2] < TIME_DELAY)
+
+	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 ||
+	 time1[T2] < TIME_DELAY)
 	{
 		if(SensorValue[A.touchPort] == 1)
 			motor[A.pulleyMotor] = 0;
