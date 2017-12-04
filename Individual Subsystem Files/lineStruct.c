@@ -48,11 +48,11 @@ void switchParity (Line & object)
 void zero(Line & A, Line & B)
 {
 	const int MOVE_POWER = 20;
+	const int TIME_DELAY = 1000; 
 	motor[A.pulleyMotor]=motor[B.pulleyMotor] = MOVE_POWER;
 	motor[A.strummingMotor] = A.parity * MOVE_POWER;
 	motor[B.strummingMotor] = B.parity * MOVE_POWER;
 	time1[T2] = 0;
-	const int TIME_DELAY = 1000; 
 
 	while(SensorValue[A.touchPort] == 0 || SensorValue[B.touchPort] == 0 ||
 	 time1[T2] < TIME_DELAY)
